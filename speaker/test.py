@@ -1,23 +1,34 @@
-import dbus
-import re
+import bluetooth as bt
+import vlc
+from time import sleep
 
-bus = dbus.SessionBus()
+s = bt.BluetoothSocket(bt.RFCOMM)
+s.connect(('00:17:AB:39:AB:21', 1))
 
-bus.get_unique_name()
 
-bus.request_name('io.github.amhndu.test')
+p = vlc.MediaPlayer('vision.mp3')
 
-service = ""
-for s in bus.list_names():
-    if re.match('org.mpris.MediaPlayer2.', s):
-        service = s
-        print(s)
-player = dbus.SessionBus().get_object(service, '/org/mpris/MediaPlayer2')
+sensibilite = 5
 
-interface = dbus.Interface(player, dbus_interface = 'org.mpris.MediaPlayer2.Player')
-prop = dbus.Interface(player, 'org.freedesktop.DBus.Properties')
-#interface.Play()
-#interface.Pause()
 
+p.play()
+#p.pause()
+
+
+def VolumeUp():
+    global p
+    global sensibilite
+    v = p.audio_get_volume()
+    if v < 100:
+        p.audio_set_volume(v + sensibilite)
+        
+def VolumeDown():
+    global p
+    global sensibilite
+    v = p.audio_get_volume()
+    if v > 0:
+        p.audio_set_volume(v - sensibilite)
+        
+        
 
 
