@@ -1,34 +1,35 @@
 import bluetooth as bt
 import vlc
-from time import sleep
-
-s = bt.BluetoothSocket(bt.RFCOMM)
-s.connect(('00:17:AB:39:AB:21', 1))
 
 
-p = vlc.MediaPlayer('vision.mp3')
+class SpeakerController:
+    def __init__(self):
+       self.volume = 50
+       self.sensibilite = 5
+       self.socket = bt.BluetoothSocket(bt.RFCOMM)
+       self.player = vlc.MediaPlayer('vision.mp3')
+       self.player.audio_set_volume(self.volume)
 
-sensibilite = 5
+    def connect(self):
+        bt.discover_devices(lookup_names = True, lookup_class = True)
+        self.socket.settimeout(10)
+        self.socket.connect(('08:DF:1F:BD:D0:98', 1))
 
+    def volumeUp(self):
+        if self.volume < 100 - self.sensibilite:
+            self.player.audio_set_volume(self.volume + self.sensibilite)
 
-p.play()
-#p.pause()
+    def volumeDown(self):
+        if self.volume >= self.sensibilite:
+            self.player.audio_set_volume(self.volume - self.sensibilite)
 
+    def play(self):
+        self.player.play()
 
-def VolumeUp():
-    global p
-    global sensibilite
-    v = p.audio_get_volume()
-    if v < 100:
-        p.audio_set_volume(v + sensibilite)
-        
-def VolumeDown():
-    global p
-    global sensibilite
-    v = p.audio_get_volume()
-    if v > 0:
-        p.audio_set_volume(v - sensibilite)
-        
-        
+    def pause(self):
+        self.player.pause()
+    
+    def stop(self):
+        self.player.stop()
 
 
