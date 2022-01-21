@@ -1,12 +1,14 @@
 import cwiid
 import time
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import cv2
+import json
 
-default_IPs = ["00:19:1D:93:DD:E4"]# ", CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8", "00:1E:A9:40:EA:9F", "00:19:1D:78:02:71"]
+default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED"] #, "E0:0C:7F:E7:CE:F8"]#, "00:1E:A9:40:EA:9F", "00:19:1D:78:02:71"]
     
-class Calibrate :
+class Init_wiimotes :
     
     n = None
 
@@ -19,16 +21,16 @@ class Calibrate :
     
     
     
-    def __init__(self, IPs = default_IPs) :
-        self.IPs = IPs
-        self.n = len(self.IPs)
-        self.wiimotes = np.empty((self.n, 5), dtype = object)
+    def __init__(self, MACs = default_MACs) :
+        self.MACs = MACs
+        self.n = len(self.MACs)
         
-    
+        #contains : cwiid.wiimote, MAC address, x, y, z, theta (angle in (O,x,y) /x), phi (angle in (O, y, z) /y)
+        self.wiimotes = np.empty((self.n, 7), dtype = object)     
 
     def connect_wiimotes(self) :
 
-        for i, ip in enumerate(self.IPs) :
+        for i, mac in enumerate(self.MACs) :
                             
             
             while True :
@@ -36,7 +38,7 @@ class Calibrate :
                     
                     print(f'Please press buttons 1 + 2 on Wiimote n°{i+1}')
                     time.sleep(0.2)
-                    wiimote = cwiid.Wiimote(ip)
+                    wiimote = cwiid.Wiimote(mac)
                     print(f"Wiimote {i+1} connected")
                     
                 except RuntimeError:
@@ -52,7 +54,7 @@ class Calibrate :
             wiimote.led = i + 1
             
             self.wiimotes[i, 0] = wiimote
-            self.wiimotes[i, 1] = ip
+            self.wiimotes[i, 1] = mac
         
 
         print("All Wiimotes connected!")
@@ -60,6 +62,7 @@ class Calibrate :
     def calibration(self) :
         print("To calibrate your wiimotes place a IR source in the middle of your room and make sure that each wiimote sees the dot inside the square")
         print("When it's done press A or B on the wiimote")
+        print("Warning : make sure that the wiimote is leveled along the left-right axis (horizontal calibration in progress)")
         #print('Press PLUS and MINUS together on Wiimote n°1 to disconnect and quit.\n')
 
         
@@ -70,11 +73,15 @@ class Calibrate :
 
         for i, wiimote in enumerate(self.wiimotes) :
             
-            x = input(f"Wiimote n°{i+1} point x (in cm) = ")
-            y = input(f"Wiimote n°{i+1} point y (in cm) = ")
-            z = input(f"Wiimote n°{i+1} point z (in cm) = ")
+            x = int(input(f"Wiimote n°{i+1} point x (in cm) = "))
+            y = int(input(f"Wiimote n°{i+1} point y (in cm) = "))
+            z = int(input(f"Wiimote n°{i+1} point z (in cm) = "))
             
             wiimote[2:5] = np.array([x, y, z])
+            
+            wiimote[5] = np.arctan((self.calib_pt[1] - y)/(self.calib_pt[0] - x))
+            wiimote[6] = np.arctan((self.calib_pt[2] - z)/(self.calib_pt[1] - y))
+                         
             
             
             while(True):
@@ -92,10 +99,10 @@ class Calibrate :
                     
                     if dot != None:
                         y = dot["pos"][0]
-                        x = -dot["pos"][1]
+                        x = 1024-dot["pos"][1]
                         
                     screen[x-5:x+5, y-5:y+5] = 1
-                cv2.imshow("IR_cam", screen)
+                cv2.imshow(f"IR Wiimote n°{i+1}", screen)
                 cv2.waitKey(10)
               
                 buttons = wiimote[0].state["buttons"]
@@ -104,8 +111,52 @@ class Calibrate :
                 
                 if buttons == 16+4096 :
                     quit()
-                    
-calibrate = Calibrate()
+       
+    def save_calibration(self, filename) :
+        
+        np.save(filename, np.array([self.wiimotes[:, 1:], self.calib_pt], dtype = object))
 
-calibrate.connect_wiimotes()
-calibrate.calibration()
+        
+        
+    def load_calibration(self, filename) :
+        data = np.load(filename, allow_pickle=True)
+        print(data)
+        for i, wiimote in enumerate(self.wiimotes) :
+            wiimote[1:] = data[0][i]
+        self.calib_pt = data[1]
+        print(self.wiimotes)
+        #data = np.genfromtxt(filepath, delimiter=',', dtype = object)
+        #print(type(data))
+        #print(self.wiimotes)
+        #if self.wiimotes.shape[0] == 1 :
+        #    self.wiimotes[0, 1:] = data[:]
+        #else :
+        #    for i, wiimote in enumerate(self.wiimotes) :
+        #        wiimote[1:] = data[i]
+        #print(self.wiimotes)
+        
+           
+       
+
+
+# tests
+                    
+connection = Init_wiimotes()
+connection.connect_wiimotes()
+#connection.calibration()
+#connection.save_calibration("./calibration.npy")
+connection.load_calibration("./calibration.npy")
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+for wiimote in connection.wiimotes :
+    ax.scatter(wiimote[2], wiimote[3], wiimote[4], cmap = "blue")
+    u = np.array([np.cos(wiimote[5]), np.sin(wiimote[5]), np.sin(wiimote[6])])
+    u = u/np.linalg.norm(u)
+    ax.quiver(wiimote[2], wiimote[3], wiimote[4], u[0], u[1], u[2])
+    
+ax.scatter(connection.calib_pt[0], connection.calib_pt[1], connection.calib_pt[2], cmap = "red")
+plt.show()
+
