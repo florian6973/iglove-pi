@@ -6,8 +6,13 @@ import numpy as np
 import cv2
 import json
 
-default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED"] #, "E0:0C:7F:E7:CE:F8"]#, "00:1E:A9:40:EA:9F", "00:19:1D:78:02:71"]
-    
+default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8", "00:1E:A9:40:EA:9F"]#, "00:19:1D:78:02:71"]
+
+width, height = 1024, 768
+fovw = 41.3
+fovh = 33.2
+ 
+ 
 class Init_wiimotes :
     
     n = None
@@ -81,6 +86,7 @@ class Init_wiimotes :
             
             wiimote[5] = np.arctan((self.calib_pt[1] - y)/(self.calib_pt[0] - x))
             wiimote[6] = np.arctan((self.calib_pt[2] - z)/(self.calib_pt[1] - y))
+            
                          
             
             
@@ -93,38 +99,56 @@ class Init_wiimotes :
                 
                 x=0 
                 y=0
-                
+                theta = 0
+                phi = 0
                 for dot in wiimote[0].state['ir_src']: 
                     
                     
                     if dot != None:
                         y = dot["pos"][0]
                         x = 1024-dot["pos"][1]
+                        #rajoute par JE :
+                        d = height/(2*np.tan(fovh/2))
+     
+                        mx = x - width//2
+                        my = y - height//2
+
+                        theta = np.arctan(mx/d) # angle with the reference point along x axis 
+                        phi = np.arctan(my/d)
+                        print("theta,phi")
+                        print(theta)
+                        print(phi)
                         
-                    screen[x-5:x+5, y-5:y+5] = 1
+                        
+                        screen[x-5:x+5, y-5:y+5] = 1
                 cv2.imshow(f"IR Wiimote n°{i+1}", screen)
                 cv2.waitKey(10)
               
                 buttons = wiimote[0].state["buttons"]
-                if buttons == 4 or buttons == 8 or buttons == 12 :
+                if buttons == 8 or buttons == 12 :
+                    
+                    #JE:
+                    
+                    wiimote[5] += theta
+                    wiimote[6] += phi
                     break
                 
                 if buttons == 16+4096 :
                     quit()
+            cv2.destroyAllWindows()
        
-    def save_calibration(self, filename) :
-        
-        np.save(filename, np.array([self.wiimotes[:, 1:], self.calib_pt], dtype = object))
+    def save_calibration(self, filename, filename_calib) :
+        np.save(filename, self.wiimotes[:, 1:])
+        np.save(filename_calib, self.calib_pt)
 
         
         
-    def load_calibration(self, filename) :
+    def load_calibration(self, filename, filename_calib) :
+        self.calib_pt = np.load(filename_calib, allow_pickle=True)
         data = np.load(filename, allow_pickle=True)
-        print(data)
         for i, wiimote in enumerate(self.wiimotes) :
-            wiimote[1:] = data[0][i]
-        self.calib_pt = data[1]
-        print(self.wiimotes)
+            wiimote[1:] = data[i]
+ 
         #data = np.genfromtxt(filepath, delimiter=',', dtype = object)
         #print(type(data))
         #print(self.wiimotes)
@@ -141,22 +165,22 @@ class Init_wiimotes :
 
 # tests
                     
-connection = Init_wiimotes()
-connection.connect_wiimotes()
+#connection = Init_wiimotes()
+#connection.connect_wiimotes()
 #connection.calibration()
 #connection.save_calibration("./calibration.npy")
-connection.load_calibration("./calibration.npy")
+#connection.load_calibration("./calibration.npy")
 
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+#fig = plt.figure()
+#ax = fig.add_subplot(111, projection='3d')
 
-for wiimote in connection.wiimotes :
-    ax.scatter(wiimote[2], wiimote[3], wiimote[4], cmap = "blue")
-    u = np.array([np.cos(wiimote[5]), np.sin(wiimote[5]), np.sin(wiimote[6])])
-    u = u/np.linalg.norm(u)
-    ax.quiver(wiimote[2], wiimote[3], wiimote[4], u[0], u[1], u[2])
-    
-ax.scatter(connection.calib_pt[0], connection.calib_pt[1], connection.calib_pt[2], cmap = "red")
-plt.show()
+#for wiimote in connection.wiimotes :
+#    ax.scatter(wiimote[2], wiimote[3], wiimote[4], cmap = "blue")
+#    u = np.array([np.cos(wiimote[5]), np.sin(wiimote[5]), np.sin(wiimote[6])])
+#    u = u/np.linalg.norm(u)
+#    ax.quiver(wiimote[2], wiimote[3], wiimote[4], u[0], u[1], u[2])
+#    
+#ax.scatter(connection.calib_pt[0], connection.calib_pt[1], connection.calib_pt[2], cmap = "red")
+#plt.show()
 
