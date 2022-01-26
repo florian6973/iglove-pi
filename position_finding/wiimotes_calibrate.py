@@ -11,6 +11,12 @@ default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8"]# 
 width, height = 1024, 768
 fovw = 41.3
 fovh = 33.2
+rfovh = fovh*np.pi/180.
+rfovw = fovw*np.pi/180.
+d_h = height/(2*np.tan(rfovh/2))
+d_w = width/(2*np.tan(rfovw/2))
+d = (d_h + d_w)/2.
+print("d_h d_w d", d_h, d_w, d)
  
  
 class Init_wiimotes :
@@ -84,10 +90,13 @@ class Init_wiimotes :
             
             wiimote[2:5] = np.array([x, y, z])
             
-            wiimote[5] = np.arctan((self.calib_pt[1] - y)/(self.calib_pt[0] - x))
-            wiimote[6] = np.arctan((self.calib_pt[2] - z)/(self.calib_pt[1] - y))
+         #   wiimote[5] = np.arctan2((self.calib_pt[1] - y),(self.calib_pt[0] - x))
+         #   wiimote[6] = np.arctan2((self.calib_pt[2] - z),(self.calib_pt[1] - y))
             
-                         
+            #wiimote[5] = np.arctan2((self.calib_pt[0] - x), (self.calib_pt[1] - y))
+            #wiimote[6] = np.arctan2((self.calib_pt[1] - y), (self.calib_pt[2] - z))
+            wiimote[5] = self.__c_arctan__(self.calib_pt[0] - x, self.calib_pt[1] - y)
+            wiimote[6] = self.__c_arctan__(self.calib_pt[1] - y, self.calib_pt[2] - z)   
             
             
             while(True):
@@ -106,13 +115,16 @@ class Init_wiimotes :
                         y = dot["pos"][0]
                         x = 1024-dot["pos"][1]
                         #rajoute par JE :
-                        d = height/(2*np.tan(np.pi*fovh/(2*180)))
      
-                        mx = x - width//2
+                        mx = -(x - width//2)
                         my = y - height//2
 
-                        theta = np.arctan(mx/d) # angle with the reference point along x axis 
+                     #  theta = np.arctan(mx/d) # angle with the reference point along x axis 
+                     #  phi = np.arctan(my/d)
+                        theta = np.arctan(mx/d)
                         phi = np.arctan(my/d)
+
+                        print("correction", theta, phi)
                         
                         
                         
@@ -120,14 +132,14 @@ class Init_wiimotes :
                 cv2.imshow(f"IR Wiimote n°{i+1}", screen)
                 cv2.waitKey(10)
               
-                buttons = wiimote[0].state["buttons"]
-                if buttons == 8 or buttons == 12 :
+                #buttons = wiimote[0].state["buttons"]
+                #if buttons == 8 or buttons == 12 :
                     
                     #JE:
                     
-                    wiimote[5] -= theta
-                    wiimote[6] -= phi
-                    break
+                wiimote[5] -= theta
+                wiimote[6] -= phi
+                break
                 
                 if buttons == 16+4096 :
                     quit()
@@ -156,7 +168,16 @@ class Init_wiimotes :
         #print(self.wiimotes)
         
            
-       
+    def __c_arctan__(self, x1, x2):
+        act = np.arctan(x2/x1)
+        if x2 > 0 and x1 > 0:
+            return act
+        elif x2 > 0 and x1 < 0:
+            return np.pi + act
+        elif x2 < 0 and x1 < 0:
+            return act - np.pi
+        else:
+            return act
 
 
 # tests
