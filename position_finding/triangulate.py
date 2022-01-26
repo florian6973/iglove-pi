@@ -1,3 +1,5 @@
+from operator import index
+from turtle import pos
 from scipy import optimize as opt
 import numpy as np
 import time
@@ -7,6 +9,8 @@ from multiprocessing import Process, Queue
 
 from wiimotes_calibrate import Init_wiimotes, d
 
+
+
 width, height = 1024, 768
 x = 0
 y = 0
@@ -14,8 +18,9 @@ z = 0
 fovw = 41.3
 fovh = 33.2
  
- 
- 
+
+
+
 # fcts utilitaires
 def distance2(X, U : np.array, P0 : np.array) :
     '''
@@ -78,6 +83,8 @@ class Triangulation :
  
     def find_inter(self) :
         return opt.minimize(self.cost_function, np.array([0, 0, 0])).x
+
+
  
 
 def trian(q, close_dots):
