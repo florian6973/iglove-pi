@@ -1,6 +1,7 @@
 from scipy import optimize as opt
 import numpy as np
 import time
+import cv2
 
 from wiimotes_calibrate import Init_wiimotes
 
@@ -55,13 +56,16 @@ class Triangulation :
  
  
             # trouver le vecteur directeur du point
-            d = height/(2*np.tan(fovh/2))
+            d = height/(2*np.tan(np.pi*fovh/(2*180)))
  
             mx = dot[1][0] - width//2
             my = dot[1][1] - height//2
 
             theta = np.arctan(mx/d) # angle with the reference point along x axis 
             phi = np.arctan(my/d)
+
+
+
 
             u = np.array([np.cos(wiimote[6] + phi) * np.cos(wiimote[5] + theta), np.cos(wiimote[6] + phi) * np.sin(wiimote[5] + theta), np.sin(wiimote[6] + phi)]) 
           
@@ -88,9 +92,12 @@ connection.save_calibration("./calibration3.npy", "./calib_pt3.npy")
 #connection.load_calibration("./calibration3.npy", "./calib_pt3.npy")
 
 wiimotes = connection.wiimotes
+
+
 print(wiimotes)
  
 DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
+
 
 while True :
     
@@ -106,6 +113,20 @@ while True :
         if dot != None :
             TS = time.time()
             DotsTS[i] = (dot["pos"], TS)
+            
+            
+            y = dot["pos"][0]
+            x = 1024-dot["pos"][1]
+            #screen = np.zeros((768,1024))
+            #screen[0:5,0:5] = 1
+            #screen[173:178,0:5] = 1
+            #screen[87:92,142:147] = 1
+            
+            #screen [x-5:x+5, y-5:y+5] =1
+            #cv2.imshow(f"IR Wiimote n°{i+1}", screen)
+            #cv2.waitKey(10)
+            
+            
             
             
             absolute_found = False
@@ -130,7 +151,7 @@ while True :
                 triangulation = Triangulation(close_dots)
                 X = triangulation.find_inter()
                 print(X)
- 
+                
  
  
  

@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 import json
 
-default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8", "00:1E:A9:40:EA:9F"]#, "00:19:1D:78:02:71"]
+default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8"]# "00:1E:A9:40:EA:9F"#, "00:19:1D:78:02:71"]
 
 width, height = 1024, 768
 fovw = 41.3
@@ -102,22 +102,18 @@ class Init_wiimotes :
                 theta = 0
                 phi = 0
                 for dot in wiimote[0].state['ir_src']: 
-                    
-                    
-                    if dot != None:
+                    if dot != None :
                         y = dot["pos"][0]
                         x = 1024-dot["pos"][1]
                         #rajoute par JE :
-                        d = height/(2*np.tan(fovh/2))
+                        d = height/(2*np.tan(np.pi*fovh/(2*180)))
      
                         mx = x - width//2
                         my = y - height//2
 
                         theta = np.arctan(mx/d) # angle with the reference point along x axis 
                         phi = np.arctan(my/d)
-                        print("theta,phi")
-                        print(theta)
-                        print(phi)
+                        
                         
                         
                         screen[x-5:x+5, y-5:y+5] = 1
@@ -129,8 +125,8 @@ class Init_wiimotes :
                     
                     #JE:
                     
-                    wiimote[5] += theta
-                    wiimote[6] += phi
+                    wiimote[5] -= theta
+                    wiimote[6] -= phi
                     break
                 
                 if buttons == 16+4096 :
