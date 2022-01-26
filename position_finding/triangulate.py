@@ -1,9 +1,13 @@
+from operator import index
+from turtle import pos
 from scipy import optimize as opt
 import numpy as np
 import time
 import cv2
 
 from wiimotes_calibrate import Init_wiimotes
+
+
 
 width, height = 1024, 768
 x = 0
@@ -12,8 +16,9 @@ z = 0
 fovw = 41.3
 fovh = 33.2
  
- 
- 
+
+
+
 # fcts utilitaires
 def distance2(X, U : np.array, P0 : np.array) :
     '''
@@ -81,6 +86,8 @@ class Triangulation :
  
     def find_inter(self) :
         return opt.minimize(self.cost_function, np.array([0, 0, 0])).x
+
+
  
 
 
@@ -92,10 +99,10 @@ connection.save_calibration("./calibration3.npy", "./calib_pt3.npy")
 #connection.load_calibration("./calibration3.npy", "./calib_pt3.npy")
 
 wiimotes = connection.wiimotes
-
-
 print(wiimotes)
- 
+
+
+
 DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
 
 
@@ -151,6 +158,9 @@ while True :
                 triangulation = Triangulation(close_dots)
                 X = triangulation.find_inter()
                 print(X)
+
+
+
                 
  
  
