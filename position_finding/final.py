@@ -17,21 +17,26 @@ class ObjetConnecte:
         self.position = position
 
 class Lampe(ObjetConnecte):
-    def __init__(self, position, state):
+    def __init__(self, position, state=False):
         super().__init__(position)
         self.state = state
+        if not self.state:
+            self.switch_off()
+        else:
+            self.switch_on()
 
     def switch(self):
         if self.state:
-            self.switch_off
+            self.switch_off()
         else:
-            self.switch_on
-            
+            self.switch_on()            
 
     def switch_on(self):
+        raise Exception("Not implemented yet")
         pass
 
     def switch_off(self):
+        raise Exception("Not implemented yet")
         pass
 
 class Speaker(ObjetConnecte):
