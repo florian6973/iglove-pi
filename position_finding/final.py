@@ -11,14 +11,28 @@ import time
 import cv2
 
 from wiimotes_calibrate import Init_wiimotes
+from ha_api import HomeAssistantAPI
+
+ip = "172.16.16.22"
+token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIyOTZkZjA5ODNjYjU0MTQxOWY3ZDdlMTgyMTdhMTEyMSIsImlhdCI6MTY0MjU5NjYxMCwiZXhwIjoxOTU3OTU2NjEwfQ.FqvXpK27-NL7qkrlrvBWmVCgvjw41acrdIGihQLlQDI"
 
 class ObjetConnecte:
     def __init__(self, position):
         self.position = position
+        
+    def run_script(self, name):
+        api = HomeAssistantAPI(ip, token)
+        api.run_script(name)
+        
+    def mqtt_top(self, payload, topic="default"):        
+        api = HomeAssistantAPI(ip, token)
+        api.mqtt_top(payload, topic)
+        
 
 class Lampe(ObjetConnecte):
-    def __init__(self, position, state=False):
+    def __init__(self, position, name, state=False):
         super().__init__(position)
+        self.name = name
         self.state = state
         if not self.state:
             self.switch_off()
@@ -32,12 +46,12 @@ class Lampe(ObjetConnecte):
             self.switch_on()            
 
     def switch_on(self):
-        raise Exception("Not implemented yet")
-        pass
+        api = HomeAssistantAPI(ip, token)
+        api.light_on(name)
 
     def switch_off(self):
-        raise Exception("Not implemented yet")
-        pass
+        api = HomeAssistantAPI(ip, token)
+        api.light_off(name)
 
 class Speaker(ObjetConnecte):
     def __init__(self, position):
