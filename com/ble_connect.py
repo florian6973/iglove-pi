@@ -4,15 +4,19 @@ from bleak import BleakClient, BleakScanner
 import struct
 import asyncio
 from bleak import BleakScanner
+import sys, os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import position_finding.final as pf
 
 async def discovery():
     devices = await BleakScanner.discover()
     for d in devices:
-        print(d)
+        print(d, d.name) #, d.details, dir(d))
 
 asyncio.run(discovery())
 
-address = "F0:6F:5A:3F:50:D3"
+address = "96:66:7C:29:BE:9D" # which is the right arduino nano #"F0:6F:5A:3F:50:D3"
 channels = {
     "a001": "acc_x",
     "a002": "acc_y",
@@ -34,6 +38,8 @@ def callback(sender: int, data: bytearray):
         val = str(data.decode())
         print(f"Notification3 {src}: {val}")
         if val == "TEST":
+            lp = pf.Lampe("antela_9w_rgb_cct")
+            lp.switch()
             print(c_data)
     else:
         val = struct.unpack('f', data)

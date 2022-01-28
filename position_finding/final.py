@@ -47,11 +47,11 @@ class Lampe(ObjetConnecte):
 
     def switch_on(self):
         api = HomeAssistantAPI(ip, token)
-        api.light_on(name)
+        api.light_on(self.name)
 
     def switch_off(self):
         api = HomeAssistantAPI(ip, token)
-        api.light_off(name)
+        api.light_off(self.name)
 
 class Speaker(ObjetConnecte):
     def __init__(self, position):
