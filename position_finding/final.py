@@ -9,7 +9,12 @@ from scipy import optimize as opt
 import numpy as np
 import time
 import cv2
+import sys
+import os
+import cwiid
+import json
 
+sys.path.append((os.path.dirname(os.path.abspath(__file__))))
 from wiimotes_calibrate import Init_wiimotes
 from ha_api import HomeAssistantAPI
 
@@ -34,24 +39,27 @@ class Lampe(ObjetConnecte):
         super().__init__(position)
         self.name = name
         self.state = state
-        if not self.state:
-            self.switch_off()
-        else:
-            self.switch_on()
+        #if not self.state:
+        #    self.switch_off()
+        #else:
+        #    self.switch_on()
 
     def switch(self):
         if self.state:
             self.switch_off()
         else:
-            self.switch_on()            
+            self.switch_on()  
+        self.state = not self.state          
 
     def switch_on(self):
         api = HomeAssistantAPI(ip, token)
         api.light_on(self.name)
+        print("\tLight on")
 
     def switch_off(self):
         api = HomeAssistantAPI(ip, token)
         api.light_off(self.name)
+        print("\tLight off")
 
 class Speaker(ObjetConnecte):
     def __init__(self, position):
@@ -172,97 +180,97 @@ class Triangulation :
  
 
 
+if __name__ == "__main__":
+    connection = Init_wiimotes()
+    connection.connect_wiimotes()
+    connection.calibration()
+    connection.save_calibration("./calibration3.npy", "./calib_pt3.npy")
+    #connection.load_calibration("./calibration3.npy", "./calib_pt3.npy")
 
-connection = Init_wiimotes()
-connection.connect_wiimotes()
-connection.calibration()
-connection.save_calibration("./calibration3.npy", "./calib_pt3.npy")
-#connection.load_calibration("./calibration3.npy", "./calib_pt3.npy")
-
-wiimotes = connection.wiimotes
-print(wiimotes)
-
-
-#on cree une lampe
-pos_lampe = np.array([0, 0, 0])
-pos_lampe[0] = input("Position de la lampe selon x (en cm) = ")
-pos_lampe[1] = input("Position de la lampe selon y (en cm) = ")
-pos_lampe[2] = input("Position de la lampe selon z (en cm) = ")
-
-lampe = Lampe(pos_lampe, False)
-list_objets = [lampe]
+    wiimotes = connection.wiimotes
+    print(wiimotes)
 
 
-DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
+    #on cree une lampe
+    pos_lampe = np.array([0, 0, 0])
+    pos_lampe[0] = input("Position de la lampe selon x (en cm) = ")
+    pos_lampe[1] = input("Position de la lampe selon y (en cm) = ")
+    pos_lampe[2] = input("Position de la lampe selon z (en cm) = ")
+
+    lampe = Lampe(pos_lampe, False)
+    list_objets = [lampe]
 
 
-while True :
-    
-    
-    ## recuperer des points avec date de peromption et n° de la wiimote qui l'a pris
-    for i, wiimote in enumerate(wiimotes) :
+    DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
+
+
+    while True :
         
-        # enregistrer les points dans un tuple avec son timestampe
         
-        #print("wiimote : ", wiimote)
-        dot = wiimote[0].state['ir_src'][0] # ATTENTION on suppose qu'on a un seul point percu
-        #print(wiimote[0], dot)
-        if dot != None :
-            TS = time.time()
-            DotsTS[i] = (dot["pos"], TS)
+        ## recuperer des points avec date de peromption et n° de la wiimote qui l'a pris
+        for i, wiimote in enumerate(wiimotes) :
             
+            # enregistrer les points dans un tuple avec son timestampe
             
-            y = dot["pos"][0]
-            x = 1024-dot["pos"][1]
-            #screen = np.zeros((768,1024))
-            #screen[0:5,0:5] = 1
-            #screen[173:178,0:5] = 1
-            #screen[87:92,142:147] = 1
-            
-            #screen [x-5:x+5, y-5:y+5] =1
-            #cv2.imshow(f"IR Wiimote n°{i+1}", screen)
-            #cv2.waitKey(10)
-            
-            
-            
-            
-            absolute_found = False
-            close_dots = [(wiimotes[i], dot["pos"])]
-            
-            for j, DotTS in enumerate(DotsTS) :
-                if j != i and DotTS[1] > 0 :
-                    #print(i, TS, j, DotTS[1])
-                    if abs(DotTS[1] - TS) < 1 : 
-                        absolute_found = True
-                        print("found by " + str(i) + " " + str(j))
-                        # on stocke les points proches temporellement
-                        close_dots.append((wiimotes[j], DotTS[0]))
- 
-     
- 
-            if not absolute_found :
-                # on integre la pos sur le capteur
-                pass
-            else :
-                # ici on triangule
-                triangulation = Triangulation(close_dots)
-                X = triangulation.find_inter()
-                print(X)
+            #print("wiimote : ", wiimote)
+            dot = wiimote[0].state['ir_src'][0] # ATTENTION on suppose qu'on a un seul point percu
+            #print(wiimote[0], dot)
+            if dot != None :
+                TS = time.time()
+                DotsTS[i] = (dot["pos"], TS)
+                
+                
+                y = dot["pos"][0]
+                x = 1024-dot["pos"][1]
+                #screen = np.zeros((768,1024))
+                #screen[0:5,0:5] = 1
+                #screen[173:178,0:5] = 1
+                #screen[87:92,142:147] = 1
+                
+                #screen [x-5:x+5, y-5:y+5] =1
+                #cv2.imshow(f"IR Wiimote n°{i+1}", screen)
+                #cv2.waitKey(10)
+                
+                
+                
+                
+                absolute_found = False
+                close_dots = [(wiimotes[i], dot["pos"])]
+                
+                for j, DotTS in enumerate(DotsTS) :
+                    if j != i and DotTS[1] > 0 :
+                        #print(i, TS, j, DotTS[1])
+                        if abs(DotTS[1] - TS) < 1 : 
+                            absolute_found = True
+                            print("found by " + str(i) + " " + str(j))
+                            # on stocke les points proches temporellement
+                            close_dots.append((wiimotes[j], DotTS[0]))
+    
+        
+    
+                if not absolute_found :
+                    # on integre la pos sur le capteur
+                    pass
+                else :
+                    # ici on triangule
+                    triangulation = Triangulation(close_dots)
+                    X = triangulation.find_inter()
+                    print(X)
 
-    #recuperer etats gants
-    pointage = True
-    if pointage:
-        #recuperer direction carte arduino
-        direction_gant = np.array([0., 0., 0.])
+        #recuperer etats gants
+        pointage = True
+        if pointage:
+            #recuperer direction carte arduino
+            direction_gant = np.array([0., 0., 0.])
 
-        distance_objet = [0] * len(list_objets)
-        for i, objet in enumerate(list_objets):
-            distance_objet[i] = distance2(objet.position, direction_gant, X)
-        seuil = 50 #distance seuil
-        d = min(distance_objet)
-        if d < seuil:
-            objet_min = list_objets[distance_objet.index(min(distance_objet))]
-            if isinstance(objet_min, Lampe):
-                objet_min.switch()
-                #envoyer commande pour interragir avec objet_min
+            distance_objet = [0] * len(list_objets)
+            for i, objet in enumerate(list_objets):
+                distance_objet[i] = distance2(objet.position, direction_gant, X)
+            seuil = 50 #distance seuil
+            d = min(distance_objet)
+            if d < seuil:
+                objet_min = list_objets[distance_objet.index(min(distance_objet))]
+                if isinstance(objet_min, Lampe):
+                    objet_min.switch()
+                    #envoyer commande pour interragir avec objet_min
 

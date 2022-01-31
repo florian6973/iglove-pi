@@ -2,6 +2,7 @@
 # eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIyOTZkZjA5ODNjYjU0MTQxOWY3ZDdlMTgyMTdhMTEyMSIsImlhdCI6MTY0MjU5NjYxMCwiZXhwIjoxOTU3OTU2NjEwfQ.FqvXpK27-NL7qkrlrvBWmVCgvjw41acrdIGihQLlQDI
 
 from requests import get, post
+import json
 
 class HomeAssistantAPI:
   def __init__(self, ip, token):
@@ -24,7 +25,7 @@ class HomeAssistantAPI:
     return response
   
   def light_off(self, name):
-    response = post(self.url + "/light/turn_on", headers=self.headers, data=self.__prep_data_json__("light", name))
+    response = post(self.url + "/light/turn_off", headers=self.headers, data=self.__prep_data_json__("light", name))
     return response
   
   # ex : iled_blink

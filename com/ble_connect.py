@@ -1,4 +1,4 @@
-
+9
 import bluetooth
 from bleak import BleakClient, BleakScanner
 import struct
@@ -16,7 +16,7 @@ async def discovery():
 
 asyncio.run(discovery())
 
-address = "96:66:7C:29:BE:9D" # which is the right arduino nano #"F0:6F:5A:3F:50:D3"
+address = "96:66:7C:29:BE:9D" #"96:66:7C:29:BE:9D" # which is the right arduino nano #"F0:6F:5A:3F:50:D3"
 channels = {
     "a001": "acc_x",
     "a002": "acc_y",
@@ -31,6 +31,7 @@ channels = {
 }
 channels_n = {}
 c_data = {}
+lp = pf.Lampe((0., 0., 0.), "antela_9w_rgb_cct")
 
 def callback(sender: int, data: bytearray):
     src = channels[channels_n[sender]]
@@ -38,7 +39,6 @@ def callback(sender: int, data: bytearray):
         val = str(data.decode())
         print(f"Notification3 {src}: {val}")
         if val == "TEST":
-            lp = pf.Lampe("antela_9w_rgb_cct")
             lp.switch()
             print(c_data)
     else:
