@@ -1,4 +1,5 @@
 #pour l'enceinte:
+from distutils.log import error
 import bluetooth as bt
 import vlc
 
@@ -114,7 +115,11 @@ def distance2(X, U : np.array, P0 : np.array) :
         S1 += tmp**2
  
         S2 += tmp*U[i]
-    return S1 - S2**2
+
+    if S2 >= 0:  #verifier que ca vise dans la bonne direction
+        return S1 - S2**2
+    else:
+        raise ValueError
  
 def Z(X, U_list, P0_list) :
     '''
@@ -255,14 +260,33 @@ while True :
         #recuperer direction carte arduino
         direction_gant = np.array([0., 0., 0.])
 
-        distance_objet = [0] * len(list_objets)
+        distance_objet = [-1] * len(list_objets)
         for i, objet in enumerate(list_objets):
-            distance_objet[i] = distance2(objet.position, direction_gant, X)
+            try:
+                distance_objet[i] = distance2(objet.position, direction_gant, X)
+            
+            except ValueError:
+                print("objet derriere")
+            
         seuil = 50 #distance seuil
-        d = min(distance_objet)
-        if d < seuil:
-            objet_min = list_objets[distance_objet.index(min(distance_objet))]
-            if isinstance(objet_min, Lampe):
-                objet_min.switch()
-                #envoyer commande pour interragir avec objet_min
+
+        d = 0
+        i_min = -1
+        #find first distance != -1
+        for i, dist in enumerate(distance_objet):
+            if dist >= 0:
+                d = dist
+                i_min = i
+                break
+        #if exists at least one distance != -1, find min distance > 0
+        if i_min != -1:
+            for i, dist in enumerate(distance_objet):
+                if dist >= 0 and dist < d:
+                    d = dist
+                    i_min = i
+            if d < seuil:
+                objet_min = list_objets[i_min]
+                if isinstance(objet_min, Lampe):
+                    objet_min.switch()
+                    #envoyer commande pour interragir avec objet_min
 
