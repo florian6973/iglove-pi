@@ -180,7 +180,10 @@ class Triangulation :
         return Z(X, self.U_list, self.P0_list)
  
     def find_inter(self) :
-        return opt.minimize(self.cost_function, np.array([0, 0, 0])).x
+        try:
+            return opt.minimize(self.cost_function, np.array([0, 0, 0])).x
+        except:
+            return [-1, -1, -1]
 
 
  
@@ -189,124 +192,135 @@ class Triangulation :
 def trian(q, close_dots):
     triangulation = Triangulation(close_dots)
     X = triangulation.find_inter()
-    print(X)
+    q.put(X)
+    return X
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
 
+wiimotes = []
+DotsTS = None
+connection = None
+list_objets = []
 
+def init_position():
+    global connection
+    global wiimotes # todo faire une classe
+    global DotsTS
     connection = Init_wiimotes()
     connection.connect_wiimotes()
-    connection.calibration()
-    connection.save_calibration("./calibration3.npy", "./calib_pt3.npy")
-    #connection.load_calibration("./calibration3.npy", "./calib_pt3.npy")
+    #connection.calibration()
+    #connection.save_calibration("./calibration3.npy", "./calib_pt3.npy")
+    connection.load_calibration("./calibration3.npy", "./calib_pt3.npy")
 
     wiimotes = connection.wiimotes
     print(wiimotes)
 
 
     #on cree une lampe
-    pos_lampe = np.array([0, 0, 0])
-    pos_lampe[0] = input("Position de la lampe selon x (en cm) = ")
-    pos_lampe[1] = input("Position de la lampe selon y (en cm) = ")
-    pos_lampe[2] = input("Position de la lampe selon z (en cm) = ")
+    #pos_lampe = np.array([0, 0, 0])
+    #pos_lampe[0] = input("Position de la lampe selon x (en cm) = ")
+    #pos_lampe[1] = input("Position de la lampe selon y (en cm) = ")
+    #pos_lampe[2] = input("Position de la lampe selon z (en cm) = ")
 
-    lampe = Lampe(pos_lampe, False)
-    list_objets = [lampe]
+    #lampe = Lampe(pos_lampe, False)
+    #list_objets = [lampe]
 
 
     DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
-    i_count = 0
 
-    while True :
+    #while True :
         
+def get_position():        
+    global wiimotes
+    global DotsTS
+    print(len(wiimotes))
+    ## recuperer des points avec date de peromption et n° de la wiimote qui l'a pris
+    for i, wiimote in enumerate(wiimotes) :
         
-        ## recuperer des points avec date de peromption et n° de la wiimote qui l'a pris
-        for i, wiimote in enumerate(wiimotes) :
+        # enregistrer les points dans un tuple avec son timestampe
+        
+        #print("wiimote : ", wiimote)
+        dot = wiimote[0].state['ir_src'][0] # ATTENTION on suppose qu'on a un seul point percu
+        #print(wiimote[0], dot)
+        if dot != None:
+            TS = time.time()
+            DotsTS[i] = (dot["pos"], TS)
             
-            # enregistrer les points dans un tuple avec son timestampe
             
-            #print("wiimote : ", wiimote)
-            dot = wiimote[0].state['ir_src'][0] # ATTENTION on suppose qu'on a un seul point percu
-            #print(wiimote[0], dot)
-            if dot != None :
-                i_count += 1
-                if i_count%50000 == 0:
-                    TS = time.time()
-                    DotsTS[i] = (dot["pos"], TS)
-                    
-                    
-                    y = dot["pos"][0]
-                    x = 1024-dot["pos"][1]
-                    #screen = np.zeros((768,1024))
-                    #screen[0:5,0:5] = 1
-                    #screen[173:178,0:5] = 1
-                    #screen[87:92,142:147] = 1
-                    
-                    #screen [x-5:x+5, y-5:y+5] =1
-                    #cv2.imshow(f"IR Wiimote n°{i+1}", screen)
-                    #cv2.waitKey(10)
-                    
-                    
-                    
-                    
-                    absolute_found = False
-                    close_dots = [(wiimotes[i], dot["pos"])]
-                    
-                    for j, DotTS in enumerate(DotsTS) :
-                        if j != i and DotTS[1] > 0 :
-                            #print(i, TS, j, DotTS[1])
-                            if abs(DotTS[1] - TS) < 1 : 
-                                absolute_found = True
-                                print("found by " + str(i) + " " + str(j))
-                                # on stocke les points proches temporellement
-                                close_dots.append((wiimotes[j], DotTS[0]))
-        
+            y = dot["pos"][0]
+            x = 1024-dot["pos"][1]
+            #screen = np.zeros((768,1024))
+            #screen[0ow(f"IR Wiimote n°{i+1}", screen)
+            #cv2.waitKey(10)
             
-        
-                    if not absolute_found :
-                        # on integre la pos sur le capteur
-                        pass
-                    else :
-                        # ici on triangule
-                        queue = Queue()
-                        p = Process(target=trian, args=(queue, close_dots))
-                        p.start()
-                        DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
-                        TS2 = time.time()
-                        print(TS2 - TS)
-        #recuperer etats gants
-        pointage = True
-        if pointage:
-            #recuperer direction carte arduino
-            direction_gant = np.array([0., 0., 0.])
+            
+            
+            
+            absolute_found = False
+            close_dots = [(wiimotes[i], dot["pos"])]
+            
+            for j, DotTS in enumerate(DotsTS) :
+                if j != i and DotTS[1] > 0 :
+                    #print(i, TS, j, DotTS[1])
+                    if abs(DotTS[1] - TS) < 1 : 
+                        absolute_found = True
+                        print("found by " + str(i) + " " + str(j))
+                        # on stocke les points proches temporellement
+                        close_dots.append((wiimotes[j], DotTS[0]))
 
-            distance_objet = [-1] * len(list_objets)
-            for i, objet in enumerate(list_objets):
-                try:
-                    distance_objet[i] = distance2(objet.position, direction_gant, X)
-                
-                except ValueError:
-                    print("objet derriere")
-                
-            seuil = 50 #distance seuil
+            print("Finding position...")
 
-            d = 0
-            i_min = -1
-            #find first distance != -1
+            if not absolute_found :
+                # on integre la pos sur le capteur
+                pass
+            else :
+                # ici on triangule
+                queue = Queue()
+                p = Process(target=trian, args=(queue, close_dots))
+                p.start()
+                DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
+                TS2 = time.time()
+                print(TS2 - TS)
+                p.join()
+                return queue.get()
+
+
+def update_pointage():                    
+    #recuperer etats gants
+    pointage = True
+    if pointage:
+        #recuperer direction carte arduino
+        direction_gant = np.array([0., 0., 0.])
+        position_gant = get_position()
+        print("position", position_gant)
+
+        distance_objet = [-1] * len(list_objets)
+        for i, objet in enumerate(list_objets):
+            try:
+                distance_objet[i] = distance2(objet.position, direction_gant, X)
+            
+            except ValueError:
+                print("objet derriere")
+            
+        seuil = 50 #distance seuil
+
+        d = 0
+        i_min = -1
+        #find first distance != -1
+        for i, dist in enumerate(distance_objet):
+            if dist >= 0:
+                d = dist
+                i_min = i
+                break
+        #if exists at least one distance != -1, find min distance > 0
+        if i_min != -1:
             for i, dist in enumerate(distance_objet):
-                if dist >= 0:
+                if dist >= 0 and dist < d:
                     d = dist
                     i_min = i
-                    break
-            #if exists at least one distance != -1, find min distance > 0
-            if i_min != -1:
-                for i, dist in enumerate(distance_objet):
-                    if dist >= 0 and dist < d:
-                        d = dist
-                        i_min = i
-                if d < seuil:
-                    objet_min = list_objets[i_min]
-                    if isinstance(objet_min, Lampe):
-                        objet_min.switch()
-                        #envoyer commande pour interragir avec objet_min
+            if d < seuil:
+                objet_min = list_objets[i_min]
+                if isinstance(objet_min, Lampe):
+                    objet_min.switch()
+                    #envoyer commande pour interragir avec objet_min
 
