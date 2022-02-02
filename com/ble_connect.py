@@ -39,7 +39,7 @@ c_data = {}
 lp = pf.Lampe((0., 0., 0.), "antela_9w_rgb_cct")
 enc = pf.Speaker((0., 0., 0.))
 pf.init_position()
-enc.connect()
+#enc.connect()
 
 import math
  

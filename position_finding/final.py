@@ -80,7 +80,7 @@ class Speaker(ObjetConnecte):
         self.volume = 50
         self.sensibilite = 5
         self.socket = bt.BluetoothSocket(bt.RFCOMM)
-        self.player = vlc.MediaPlayer('vision.mp3')
+        self.player = vlc.MediaPlayer('vision.m4a')
         self.player.audio_set_volume(self.volume)
 
     def connect(self):
