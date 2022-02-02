@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 import json
 
-default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8"]# "00:1E:A9:40:EA:9F"#, "00:19:1D:78:02:71"]
+default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8", "00:1E:A9:40:EA:9F"]#, "00:19:1D:78:02:71"]
 
 width, height = 1024, 768
 fovw = 41.3
@@ -110,6 +110,7 @@ class Init_wiimotes :
                 y=0
                 theta = 0
                 phi = 0
+                print(wiimote[0].state['ir_src'])
                 for dot in wiimote[0].state['ir_src']: 
                     if dot != None :
                         y = dot["pos"][0]
@@ -129,17 +130,18 @@ class Init_wiimotes :
                         
                         
                         screen[x-5:x+5, y-5:y+5] = 1
+                        print(x,y)
                 cv2.imshow(f"IR Wiimote n°{i+1}", screen)
+                #cv2.waitKey(10)
                 cv2.waitKey(10)
               
-                #buttons = wiimote[0].state["buttons"]
-                #if buttons == 8 or buttons == 12 :
-                    
+                buttons = wiimote[0].state["buttons"]
+                if buttons == 8 or buttons == 12 :
+                    break    
                     #JE:
                     
-                wiimote[5] -= theta
-                wiimote[6] -= phi
-                break
+                    wiimote[5] -= theta
+                    wiimote[6] -= phi
                 
                 if buttons == 16+4096 :
                     quit()

@@ -3,6 +3,8 @@ from distutils.log import error
 import bluetooth as bt
 import vlc
 
+import asyncio
+
 #pour la triangulation :
 from operator import index
 from turtle import pos
@@ -15,6 +17,15 @@ import os
 import cwiid
 import json
 from multiprocessing import Process, Queue
+
+import bluetooth
+from bleak import BleakClient, BleakScanner
+import struct
+import asyncio
+from bleak import BleakScanner
+import sys, os
+from ahrs.filters.madgwick import Madgwick
+import numpy as np
 
 sys.path.append((os.path.dirname(os.path.abspath(__file__))))
 from wiimotes_calibrate import Init_wiimotes
@@ -73,8 +84,12 @@ class Speaker(ObjetConnecte):
         self.player.audio_set_volume(self.volume)
 
     def connect(self):
-        bt.discover_devices(lookup_names = True, lookup_class = True)
-        self.socket.settimeout(10)
+        devices = bt.discover_devices(lookup_names = True)
+        for name, addr in devices:
+            print("name", name)
+            print("addr",addr)
+        #self.socket.settimeout(10)
+        self.socket = bt.BluetoothSocket(bt.RFCOMM)
         self.socket.connect(('08:DF:1F:BD:D0:98', 1))
 
     def volumeUp(self):
@@ -108,7 +123,20 @@ fovw = 41.3
 fovh = 33.2
  
 
-
+def distance1(X, U : np.array, P0 : np.array) :
+    '''
+    Returns the distance between a point X and the line passing through P0 and P
+    '''
+    S1 = 0
+    S2 = 0
+    U = U/np.linalg.norm(U) # make sure U is normalized (useless after tests)
+ 
+    for i in range(3) :
+        tmp = (X[i]-P0[i]) 
+        S1 += tmp**2
+ 
+        S2 += tmp*U[i]
+    return S1 - S2**2
 
 # fcts utilitaires
 def distance2(X, U : np.array, P0 : np.array) :
@@ -128,7 +156,7 @@ def distance2(X, U : np.array, P0 : np.array) :
     if S2 >= 0:  #verifier que ca vise dans la bonne direction
         return S1 - S2**2
     else:
-        raise ValueError
+        raise ValueError("N'importe quoi")
  
 def Z(X, U_list, P0_list) :
     '''
@@ -136,7 +164,7 @@ def Z(X, U_list, P0_list) :
     '''
     S = 0
     for i, U in enumerate(U_list) :
-        S += distance2(X, np.array(U), np.array(P0_list[i]))
+        S += distance1(X, np.array(U), np.array(P0_list[i]))
  
     return S
  
@@ -181,8 +209,11 @@ class Triangulation :
  
     def find_inter(self) :
         try:
+            print(self.U_list)
+            print(self.P0_list)
             return opt.minimize(self.cost_function, np.array([0, 0, 0])).x
-        except:
+        except Exception as ee:
+            print(ee)
             return [-1, -1, -1]
 
 
@@ -209,8 +240,8 @@ def init_position():
     connection = Init_wiimotes()
     connection.connect_wiimotes()
     #connection.calibration()
-    #connection.save_calibration("./calibration3.npy", "./calib_pt3.npy")
-    connection.load_calibration("./calibration3.npy", "./calib_pt3.npy")
+    #connection.save_calibration("./calibration4.npy", "./calib_pt4.npy")
+    connection.load_calibration("./calibration4.npy", "./calib_pt4.npy")
 
     wiimotes = connection.wiimotes
     print(wiimotes)
@@ -236,7 +267,7 @@ def get_position():
     print(len(wiimotes))
     ## recuperer des points avec date de peromption et n° de la wiimote qui l'a pris
     for i, wiimote in enumerate(wiimotes) :
-        
+        print("angles", wiimote[5], wiimote[6])
         # enregistrer les points dans un tuple avec son timestampe
         
         #print("wiimote : ", wiimote)
@@ -276,12 +307,13 @@ def get_position():
             else :
                 # ici on triangule
                 queue = Queue()
+                print("point pris", close_dots)
                 p = Process(target=trian, args=(queue, close_dots))
                 p.start()
-                DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
                 TS2 = time.time()
                 print(TS2 - TS)
                 p.join()
+                DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
                 return queue.get()
 
 
@@ -324,3 +356,4 @@ def update_pointage():
                     objet_min.switch()
                     #envoyer commande pour interragir avec objet_min
 
+#asyncio.run(discovery())
