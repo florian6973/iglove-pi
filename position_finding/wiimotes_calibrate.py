@@ -97,7 +97,8 @@ class Init_wiimotes :
             #wiimote[6] = np.arctan2((self.calib_pt[1] - y), (self.calib_pt[2] - z))
             wiimote[5] = self.__c_arctan__(self.calib_pt[0] - x, self.calib_pt[1] - y)
             wiimote[6] = self.__c_arctan__(self.calib_pt[1] - y, self.calib_pt[2] - z)   
-            
+            print("angle Oxy  : ", wiimote[5])
+            print("angle Oyz  : ", wiimote[6])
             
             while(True):
                 
@@ -108,13 +109,13 @@ class Init_wiimotes :
                 
                 x=0 
                 y=0
-                theta = 0
-                phi = 0
+                theta=0
+                phi=0
                 print(wiimote[0].state['ir_src'])
                 for dot in wiimote[0].state['ir_src']: 
                     if dot != None :
                         y = dot["pos"][0]
-                        x = 1024-dot["pos"][1]
+                        x = width-dot["pos"][1]
                         #rajoute par JE :
      
                         mx = -(x - width//2)
@@ -125,23 +126,22 @@ class Init_wiimotes :
                         theta = np.arctan(mx/d)
                         phi = np.arctan(my/d)
 
-                        print("correction", theta, phi)
+                        print("correction", mx, my, theta, phi)
                         
                         
                         
                         screen[x-5:x+5, y-5:y+5] = 1
-                        print(x,y)
+                        # print(x,y)
                 cv2.imshow(f"IR Wiimote n°{i+1}", screen)
-                #cv2.waitKey(10)
                 cv2.waitKey(10)
               
                 buttons = wiimote[0].state["buttons"]
                 if buttons == 8 or buttons == 12 :
-                    break    
-                    #JE:
-                    
                     wiimote[5] -= theta
                     wiimote[6] -= phi
+                    break    
+                    
+                    
                 
                 if buttons == 16+4096 :
                     quit()

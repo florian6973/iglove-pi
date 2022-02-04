@@ -192,11 +192,13 @@ class Triangulation :
             theta = np.arctan(mx/d) # angle with the reference point along x axis 
             phi = np.arctan(my/d)
 
+            print("angles : ", theta, phi)
 
 
-
-            u = np.array([np.cos(wiimote[6] + phi) * np.cos(wiimote[5] + theta), np.cos(wiimote[6] + phi) * np.sin(wiimote[5] + theta), np.sin(wiimote[6] + phi)]) 
-          
+            u = np.array([np.cos(wiimote[6] + phi) * np.cos(wiimote[5] + theta),
+                          np.cos(wiimote[6] + phi) * np.sin(wiimote[5] + theta), 
+                          np.sin(wiimote[6] + phi)]) 
+            print("vecteur u : ", u)
             self.U_list.append(u)
  
  
@@ -211,7 +213,8 @@ class Triangulation :
         try:
             print(self.U_list)
             print(self.P0_list)
-            return opt.minimize(self.cost_function, np.array([0, 0, 0])).x
+
+            return opt.minimize(self.cost_function, self.wiimote[2:5]).x
         except Exception as ee:
             print(ee)
             return [-1, -1, -1]
