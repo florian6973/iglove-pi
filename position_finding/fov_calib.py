@@ -6,18 +6,17 @@ import numpy as np
 import cv2
 import json
 
-default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8", "00:1E:A9:40:EA:9F"]#, "00:19:1D:78:02:71"]
+default_MACs = ["00:19:1D:93:DD:E4"]
 
 width, height = 1024, 768
-fovw = 43.
-#fovh = 33.2
-#rfovh = fovh*np.pi/180.
-#rfovw = fovw*np.pi/180.
-#d_h = height/(2*np.tan(rfovh/2))
-#d_w = width/(2*np.tan(rfovw/2))
-#d = (d_h + d_w)/2.
-d = width/(2*np.tan(fovw*np.pi/180.))
-#print("d_h d_w d", d_h, d_w, d)
+fovw = 41.3
+fovh = 33.2
+rfovh = fovh*np.pi/180.
+rfovw = fovw*np.pi/180.
+d_h = height/(2*np.tan(rfovh/2))
+d_w = width/(2*np.tan(rfovw/2))
+d = (d_h + d_w)/2.
+print("d_h d_w d", d_h, d_w, d)
  
  
 class Init_wiimotes :
@@ -79,27 +78,9 @@ class Init_wiimotes :
 
         
 
-        self.calib_pt[0] = input("Calibration point x (in cm) = ")
-        self.calib_pt[1] = input("Calibration point y (in cm) = ")
-        self.calib_pt[2] = input("Calibration point z (in cm) = ")
 
         for i, wiimote in enumerate(self.wiimotes) :
             
-            x = int(input(f"Wiimote n°{i+1} point x (in cm) = "))
-            y = int(input(f"Wiimote n°{i+1} point y (in cm) = "))
-            z = int(input(f"Wiimote n°{i+1} point z (in cm) = "))
-            
-            wiimote[2:5] = np.array([x, y, z])
-            
-         #   wiimote[5] = np.arctan2((self.calib_pt[1] - y),(self.calib_pt[0] - x))
-         #   wiimote[6] = np.arctan2((self.calib_pt[2] - z),(self.calib_pt[1] - y))
-            
-            #wiimote[5] = np.arctan2((self.calib_pt[0] - x), (self.calib_pt[1] - y))
-            #wiimote[6] = np.arctan2((self.calib_pt[1] - y), (self.calib_pt[2] - z))
-            wiimote[5] = self.__c_arctan__(self.calib_pt[0] - x, self.calib_pt[1] - y)
-            wiimote[6] = self.__c_arctan2__(self.calib_pt[1] - y, self.calib_pt[2] - z)   
-            print("angle Oxy  : ", wiimote[5])
-            print("angle Oyz  : ", wiimote[6])
             
             while(True):
                 
@@ -112,22 +93,14 @@ class Init_wiimotes :
                 y=0
                 theta=0
                 phi=0
-                #print(wiimote[0].state['ir_src'])
                 for dot in wiimote[0].state['ir_src']: 
                     if dot != None :
-                        y = dot["pos"][1]
-                        x = width-dot["pos"][0]
+                        y = dot["pos"][0]
+                        x = width-dot["pos"][1]
+
+                        print("Point", x, y)
                         #rajoute par JE :
      
-                        mx = -(x - width//2)
-                        my = y - height//2
-
-                     #  theta = np.arctan(mx/d) # angle with the reference point along x axis 
-                     #  phi = np.arctan(my/d)
-                        theta = np.arctan(mx/d)
-                        phi = np.arctan(my/d)
-
-                        print("correction", x, y, mx, my, theta, phi, end = "\r")
                         
                         
                         
@@ -138,30 +111,15 @@ class Init_wiimotes :
               
                 buttons = wiimote[0].state["buttons"]
                 if buttons == 8 or buttons == 12 :
-                    wiimote[5] -= theta
-                    wiimote[6] -= phi
-                    break
+                    break    
                     
                     
                 
                 if buttons == 16+4096 :
                     quit()
             cv2.destroyAllWindows()
-
-            print("correction finale", x, y, mx, my, theta, phi)    
        
-    def save_calibration(self, filename, filename_calib) :
-        np.save(filename, self.wiimotes[:, 1:])
-        np.save(filename_calib, self.calib_pt)
-
-        
-        
-    def load_calibration(self, filename, filename_calib) :
-        self.calib_pt = np.load(filename_calib, allow_pickle=True)
-        data = np.load(filename, allow_pickle=True)
-        for i, wiimote in enumerate(self.wiimotes) :
-            wiimote[1:] = data[i]
- 
+    
         #data = np.genfromtxt(filepath, delimiter=',', dtype = object)
         #print(type(data))
         #print(self.wiimotes)
@@ -184,25 +142,13 @@ class Init_wiimotes :
         else:
             return act
 
-    
-           
-    def __c_arctan2__(self, x1, x2):
-        act = np.arctan(x2/x1)
-        if x2 > 0 and x1 > 0:
-            return act
-        elif x2 > 0 and x1 < 0:
-            return -act
-        elif x2 < 0 and x1 < 0:
-            return -act
-        else:
-            return act
-
 
 # tests
                     
 #connection = Init_wiimotes()
 #connection.connect_wiimotes()
 #connection.calibration()
+
 #connection.save_calibration("./calibration.npy")
 #connection.load_calibration("./calibration.npy")
 
@@ -219,3 +165,13 @@ class Init_wiimotes :
 #ax.scatter(connection.calib_pt[0], connection.calib_pt[1], connection.calib_pt[2], cmap = "red")
 #plt.show()
 
+d = [2.5, 2., 1.5, 1., 0.5]
+w = [1.94, 1.58, 1.19, 0.86, 0.435]
+a = []
+
+for i in range(len(w)):
+    a.append(np.arctan(w[i]/(2*d[i])))
+
+ang = np.mean(a[0:3])
+print(a)
+print(ang)

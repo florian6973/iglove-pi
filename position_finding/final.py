@@ -18,6 +18,10 @@ import cwiid
 import json
 from multiprocessing import Process, Queue
 
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
+
 import bluetooth
 from bleak import BleakClient, BleakScanner
 import struct
@@ -119,8 +123,8 @@ width, height = 1024, 768
 x = 0
 y = 0
 z = 0
-fovw = 41.3
-fovh = 33.2
+fovw = 43.
+#fovh = 43.#33.2  [-0.09038561 -0.83633562
  
 
 def distance1(X, U : np.array, P0 : np.array) :
@@ -158,13 +162,16 @@ def distance2(X, U : np.array, P0 : np.array) :
     else:
         raise ValueError("N'importe quoi")
  
-def Z(X, U_list, P0_list) :
+def Z(X, U_list, P0_list, detail=False) :
     '''
     Cost function of a given point X
     '''
     S = 0
     for i, U in enumerate(U_list) :
-        S += distance1(X, np.array(U), np.array(P0_list[i]))
+        lc = distance1(X, np.array(U), np.array(P0_list[i]))
+        if detail:
+            print(U, lc)
+        S += lc
  
     return S
  
@@ -178,13 +185,14 @@ class Triangulation :
  
  
     def __init__(self, close_dots) : 
+        global ax
         for dot in close_dots :
             wiimote = dot[0]
             self.P0_list.append([wiimote[2], wiimote[3], wiimote[4]]) #positions de la wiimote
  
  
             # trouver le vecteur directeur du point
-            d = height/(2*np.tan(np.pi*fovh/(2*180)))
+            d = width/(2*np.tan(np.pi*fovw/(2*180)))
  
             mx = dot[1][0] - width//2
             my = dot[1][1] - height//2
@@ -193,28 +201,52 @@ class Triangulation :
             phi = np.arctan(my/d)
 
             print("angles : ", theta, phi)
+            print("angles : ", wiimote[5] + theta, wiimote[6] + phi)
 
 
-            u = np.array([np.cos(wiimote[6] + phi) * np.cos(wiimote[5] + theta),
-                          np.cos(wiimote[6] + phi) * np.sin(wiimote[5] + theta), 
+            u = np.array([np.cos(wiimote[5] + theta) * np.cos(wiimote[6] + phi),
+                          np.sin(wiimote[5] + theta) * np.cos(wiimote[6] + phi),
                           np.sin(wiimote[6] + phi)]) 
+
+            u = u/np.linalg.norm(u)
             print("vecteur u : ", u)
             self.U_list.append(u)
+
+        if len(self.U_list) > 2:
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='3d')
+            ax.clear()
+            for i, u in enumerate(self.U_list):
+                U, V, W = u*20
+                X, Y, Z = self.P0_list[i]
+                print("points pl", X, Y, Z, U, V, W)
+                ax.quiver(X, Y, Z, U, V, W)
+            ax.set_xlim([-10, 130])
+            ax.set_ylim([-10, 250])
+            ax.set_zlim([-10, 110])
+            #plt.show()
  
  
     def cost_function(self, X) :
         '''
         Function to optimize
         '''
- 
+
         return Z(X, self.U_list, self.P0_list)
  
     def find_inter(self) :
         try:
             print(self.U_list)
             print(self.P0_list)
-
-            return opt.minimize(self.cost_function, self.wiimote[2:5]).x
+            #res = opt.minimize(self.cost_function, self.P0_list[0], method="Powell")
+            res = opt.minimize(self.cost_function, self.P0_list[0], method="Nelder-Mead")
+            print(res.message)
+            print(res.success)
+            print(res.fun)
+            print(Z(res.x, self.U_list, self.P0_list, True))
+            print(Z([50, 90, 3], self.U_list, self.P0_list, True))
+            print(Z(self.P0_list[0], self.U_list, self.P0_list, True))
+            return res.x
         except Exception as ee:
             print(ee)
             return [-1, -1, -1]
@@ -242,9 +274,9 @@ def init_position():
     global DotsTS
     connection = Init_wiimotes()
     connection.connect_wiimotes()
-    #connection.calibration()
-    #connection.save_calibration("./calibration4.npy", "./calib_pt4.npy")
-    connection.load_calibration("./calibration4.npy", "./calib_pt4.npy")
+    connection.calibration()
+    connection.save_calibration("./calibration7.npy", "./calib_pt7.npy")
+    #connection.load_calibration("./calibration6.npy", "./calib_pt6.npy")
 
     wiimotes = connection.wiimotes
     print(wiimotes)
@@ -268,9 +300,10 @@ def get_position():
     global wiimotes
     global DotsTS
     print(len(wiimotes))
+    res = []
     ## recuperer des points avec date de peromption et n° de la wiimote qui l'a pris
     for i, wiimote in enumerate(wiimotes) :
-        print("angles", wiimote[5], wiimote[6])
+        print("angles", wiimote[1], wiimote[5], wiimote[6])
         # enregistrer les points dans un tuple avec son timestampe
         
         #print("wiimote : ", wiimote)
@@ -281,8 +314,8 @@ def get_position():
             DotsTS[i] = (dot["pos"], TS)
             
             
-            y = dot["pos"][0]
-            x = 1024-dot["pos"][1]
+            y = dot["pos"][1]
+            x = 1024-dot["pos"][0]
             #screen = np.zeros((768,1024))
             #screen[0ow(f"IR Wiimote n°{i+1}", screen)
             #cv2.waitKey(10)
@@ -296,7 +329,7 @@ def get_position():
             for j, DotTS in enumerate(DotsTS) :
                 if j != i and DotTS[1] > 0 :
                     #print(i, TS, j, DotTS[1])
-                    if abs(DotTS[1] - TS) < 1 : 
+                    if abs(DotTS[1] - TS) < 5. : 
                         absolute_found = True
                         print("found by " + str(i) + " " + str(j))
                         # on stocke les points proches temporellement
@@ -307,7 +340,7 @@ def get_position():
             if not absolute_found :
                 # on integre la pos sur le capteur
                 pass
-            else :
+            else:
                 # ici on triangule
                 queue = Queue()
                 print("point pris", close_dots)
@@ -316,8 +349,9 @@ def get_position():
                 TS2 = time.time()
                 print(TS2 - TS)
                 p.join()
-                DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
-                return queue.get()
+                #DotsTS = np.array([(None, -1)]*len(wiimotes), dtype = object)
+                res.append(queue.get())
+    return res
 
 
 def update_pointage():                    
@@ -360,3 +394,9 @@ def update_pointage():
                     #envoyer commande pour interragir avec objet_min
 
 #asyncio.run(discovery())
+
+if __name__ == "__main__":
+    init_position()
+    while 1:
+        update_pointage()
+        input()
