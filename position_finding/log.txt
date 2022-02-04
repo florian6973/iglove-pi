@@ -1,0 +1,1002 @@
+979.7193958620046
+[-0.09038561 -0.83633562 -0.54071543] 489.85928479583526
+[-0.61049926 -0.50804362 -0.60760376] 489.86011106616934
+979.7193958620046
+[-0.09038561 -0.83633562 -0.54071543] 2933.1916229287453
+[-0.61049926 -0.50804362 -0.60760376] 4177.375551080018
+7110.567174008764
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position [array([  8.34738573, 134.5448187 ,  11.11211403])]
+ 
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+^CTraceback (most recent call last):
+  File "/home/pi/Documents/iglove-pi/position_finding/final.py", line 400, in <module>
+    while 1:
+KeyboardInterrupt
+
+pi@raspberrypi:~/Documents/iglove-pi/position_finding $ python final.py
+Please press buttons 1 + 2 on Wiimote n°1
+Wiimote 1 connected
+Please press buttons 1 + 2 on Wiimote n°2
+Wiimote 2 connected
+Please press buttons 1 + 2 on Wiimote n°3
+Wiimote 3 connected
+Please press buttons 1 + 2 on Wiimote n°4
+Wiimote 4 connected
+All Wiimotes connected!
+[[<cwiid.Wiimote object at 0xa774e788> '00:19:1D:93:DD:E4' 0 0 98
+  1.1296168463799159 -0.7214460826005709]
+ [<cwiid.Wiimote object at 0xa774e620> 'CC:9E:00:5D:2C:ED' 123 233 99
+  -2.52967295637821 -0.5586902072639977]
+ [<cwiid.Wiimote object at 0xa76f9ea8> 'E0:0C:7F:E7:CE:F8' 11 230 97
+  -1.9023627565857462 -0.49756300068812565]
+ [<cwiid.Wiimote object at 0xa76caf80> '00:1E:A9:40:EA:9F' 129 10 98
+  2.4019678996271914 -0.8894883786981762]]
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+Finding position...
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+Finding position...
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+found by 3 2
+Finding position...
+point pris [(array([<cwiid.Wiimote object at 0xa76caf80>, '00:1E:A9:40:EA:9F', 129, 10,
+       98, 2.4019678996271914, -0.8894883786981762], dtype=object), (499, 509)), (array([<cwiid.Wiimote object at 0xa76f9ea8>, 'E0:0C:7F:E7:CE:F8', 11, 230,
+       97, -1.9023627565857462, -0.49756300068812565], dtype=object), (736, 320))]
+0.037096261978149414
+angles :  -0.010001299693248554 0.09587470678540505
+angles :  2.391966599933943 -0.7936136719127711
+vecteur u :  [-0.51329291  0.47782345 -0.71289209]
+angles :  0.17065950104324124 -0.049199074723201855
+angles :  -1.731703255542505 -0.5467620754113275
+vecteur u :  [-0.13685636 -0.84317809 -0.51992408]
+[array([-0.51329291,  0.47782345, -0.71289209]), array([-0.13685636, -0.84317809, -0.51992408])]
+[[129, 10, 98], [11, 230, 97]]
+Optimization terminated successfully.
+True
+1955.818284644316
+[-0.51329291  0.47782345 -0.71289209] 977.9096420924143
+[-0.13685636 -0.84317809 -0.51992408] 977.9086425519017
+1955.818284644316
+[-0.51329291  0.47782345 -0.71289209] 203.52587091177702
+[-0.13685636 -0.84317809 -0.51992408] 3848.7750007875984
+4052.3008716993754
+[-0.51329291  0.47782345 -0.71289209] 0.0
+[-0.13685636 -0.84317809 -0.51992408] 33821.36201263822
+33821.36201263822
+position [array([13.57951094, 87.39816284, -9.78931342])]
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+found by 3 2
+Finding position...
+point pris [(array([<cwiid.Wiimote object at 0xa76caf80>, '00:1E:A9:40:EA:9F', 129, 10,
+       98, 2.4019678996271914, -0.8894883786981762], dtype=object), (486, 496)), (array([<cwiid.Wiimote object at 0xa76f9ea8>, 'E0:0C:7F:E7:CE:F8', 11, 230,
+       97, -1.9023627565857462, -0.49756300068812565], dtype=object), (736, 320))]
+0.01986861228942871
+angles :  -0.02000059900674508 0.08595559860227325
+angles :  2.3819673006204463 -0.8035327800959029
+vecteur u :  [-0.50333717  0.47803875 -0.71981292]
+angles :  0.17065950104324124 -0.049199074723201855
+angles :  -1.731703255542505 -0.5467620754113275
+vecteur u :  [-0.13685636 -0.84317809 -0.51992408]
+[array([-0.50333717,  0.47803875, -0.71981292]), array([-0.13685636, -0.84317809, -0.51992408])]
+[[129, 10, 98], [11, 230, 97]]
+Optimization terminated successfully.
+True
+2087.0361019070806
+[-0.50333717  0.47803875 -0.71981292] 1043.51867358237
+[-0.13685636 -0.84317809 -0.51992408] 1043.5174283247106
+2087.0361019070806
+[-0.50333717  0.47803875 -0.71981292] 236.271106470831
+[-0.13685636 -0.84317809 -0.51992408] 3848.7750007875984
+4085.0461072584294
+[-0.50333717  0.47803875 -0.71981292] 0.0
+[-0.13685636 -0.84317809 -0.51992408] 33821.36201263822
+33821.36201263822
+position [array([ 14.60677086,  87.10099983, -10.20393923])]
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+found by 3 2
+Finding position...
+point pris [(array([<cwiid.Wiimote object at 0xa76caf80>, '00:1E:A9:40:EA:9F', 129, 10,
+       98, 2.4019678996271914, -0.8894883786981762], dtype=object), (472, 492)), (array([<cwiid.Wiimote object at 0xa76f9ea8>, 'E0:0C:7F:E7:CE:F8', 11, 230,
+       97, -1.9023627565857462, -0.49756300068812565], dtype=object), (736, 320))]
+0.014899015426635742
+angles :  -0.030764546454852906 0.0829000594379526
+angles :  2.3712033531723384 -0.8065883192602236
+vecteur u :  [-0.49658182  0.48189489 -0.72193062]
+angles :  0.17065950104324124 -0.049199074723201855
+angles :  -1.731703255542505 -0.5467620754113275
+vecteur u :  [-0.13685636 -0.84317809 -0.51992408]
+[array([-0.49658182,  0.48189489, -0.72193062]), array([-0.13685636, -0.84317809, -0.51992408])]
+[[129, 10, 98], [11, 230, 97]]
+Optimization terminated successfully.
+True
+2170.692344611063
+[-0.49658182  0.48189489 -0.72193062] 1085.3464174535402
+[-0.13685636 -0.84317809 -0.51992408] 1085.345927157523
+2170.692344611063
+[-0.49658182  0.48189489 -0.72193062] 243.29753043391247
+[-0.13685636 -0.84317809 -0.51992408] 3848.7750007875984
+4092.072531221511
+[-0.49658182  0.48189489 -0.72193062] 0.0
+[-0.13685636 -0.84317809 -0.51992408] 33821.36201263822
+33821.36201263822
+position [array([ 15.3523163 ,  87.54234117, -10.06066996])]
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+Finding position...
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+Finding position...
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+Finding position...
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+Finding position...
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+found by 2 3
+Finding position...
+point pris [(array([<cwiid.Wiimote object at 0xa76f9ea8>, 'E0:0C:7F:E7:CE:F8', 11, 230,
+       97, -1.9023627565857462, -0.49756300068812565], dtype=object), (808, 416)), (array([<cwiid.Wiimote object at 0xa76caf80>, '00:1E:A9:40:EA:9F', 129, 10,
+       98, 2.4019678996271914, -0.8894883786981762], dtype=object), (490, 514))]
+0.015485763549804688
+angles :  0.22391089018494445 0.024614432469834996
+angles :  -1.6784518664008017 -0.4729485682182907
+vecteur u :  [-0.09565307 -0.88507528 -0.45551316]
+angles :  -0.016924224698853754 0.09968482246412907
+angles :  2.3850436749283377 -0.7898035562340471
+vecteur u :  [-0.51194424  0.48322641 -0.71021499]
+[array([-0.09565307, -0.88507528, -0.45551316]), array([-0.51194424,  0.48322641, -0.71021499])]
+[[11, 230, 97], [129, 10, 98]]
+
+
+
+
+
+
+Optimization terminated successfully.
+True
+2008.969673548294
+[-0.09565307 -0.88507528 -0.45551316] 1004.4821632834937
+[-0.51194424  0.48322641 -0.71021499] 1004.4875102648002
+2008.969673548294
+[-0.09565307 -0.88507528 -0.45551316] 3388.552110181896
+[-0.51194424  0.48322641 -0.71021499] 182.61019560224304
+3571.162305784139
+[-0.09565307 -0.88507528 -0.45551316] 0.0
+[-0.51194424  0.48322641 -0.71021499] 34292.38099132881
+34292.38099132881
+
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position [array([21.27111377, 81.01138616,  1.77193687])]
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position []
+
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+found by 3 2
+Finding position...
+point pris [(array([<cwiid.Wiimote object at 0xa76caf80>, '00:1E:A9:40:EA:9F', 129, 10,
+       98, 2.4019678996271914, -0.8894883786981762], dtype=object), (501, 506)), (array([<cwiid.Wiimote object at 0xa76f9ea8>, 'E0:0C:7F:E7:CE:F8', 11, 230,
+       97, -1.9023627565857462, -0.49756300068812565], dtype=object), (808, 416))]
+0.018880605697631836
+angles :  -0.008462718342221523 0.09358728925821118
+angles :  2.39350518128497 -0.7959010894399651
+vecteur u :  [-0.51283085  0.47592265 -0.71449433]
+angles :  0.22391089018494445 0.024614432469834996
+angles :  -1.6784518664008017 -0.4729485682182907
+vecteur u :  [-0.09565307 -0.88507528 -0.45551316]
+[array([-0.51283085,  0.47592265, -0.71449433]), array([-0.09565307, -0.88507528, -0.45551316])]
+[[129, 10, 98], [11, 230, 97]]
+
+Optimization terminated successfully.
+True
+2010.7453765721293
+[-0.51283085  0.47592265 -0.71449433] 1005.3715299949545
+[-0.09565307 -0.88507528 -0.45551316] 1005.3738465771748
+2010.7453765721293
+[-0.51283085  0.47592265 -0.71449433] 214.1764176599754
+[-0.09565307 -0.88507528 -0.45551316] 3388.552110181896
+3602.7285278418713
+[-0.51283085  0.47592265 -0.71449433] 0.0
+[-0.09565307 -0.88507528 -0.45551316] 28845.520659960777
+28845.520659960777
+position [array([21.15731814, 79.82094138,  1.15639716])]
+4
+angles 00:19:1D:93:DD:E4 1.1296168463799159 -0.7214460826005709
+angles CC:9E:00:5D:2C:ED -2.52967295637821 -0.5586902072639977
+angles E0:0C:7F:E7:CE:F8 -1.9023627565857462 -0.49756300068812565
+found by 2 3
+Finding position...
+point pris [(array([<cwiid.Wiimote object at 0xa76f9ea8>, 'E0:0C:7F:E7:CE:F8', 11, 230,
+       97, -1.9023627565857462, -0.49756300068812565], dtype=object), (784, 360)), (array([<cwiid.Wiimote object at 0xa76caf80>, '00:1E:A9:40:EA:9F', 129, 10,
+       98, 2.4019678996271914, -0.8894883786981762], dtype=object), (501, 506))]
+0.014319419860839844
+angles :  0.20628807737529714 -0.018462455540262747
+angles :  -1.696074679210449 -0.5160254562283884
+vecteur u :  [-0.1086807  -0.8629706  -0.49342704]
+angles :  -0.008462718342221523 0.09358728925821118
+angles :  2.39350518128497 -0.7959010894399651
+vecteur u :  [-0.51283085  0.47592265 -0.71449433]
+[array([-0.1086807 , -0.8629706 , -0.49342704]), array([-0.51283085,  0.47592265, -0.71449433])]
+[[11, 230, 97], [129, 10, 98]]
+Optimization terminated successfully.
+True
+1884.1887815962327
+[-0.1086807  -0.8629706  -0.49342704] 942.0947559896267
+[-0.51283085  0.47592265 -0.71449433] 942.094025606606
+1884.1887815962327
+[-0.1086807  -0.8629706  -0.49342704] 3401.2082642490677
+[-0.51283085  0.47592265 -0.71449433] 214.1764176599754
+3615.384681909043
+[-0.1086807  -0.8629706  -0.49342704] 0.0
+[-0.51283085  0.47592265 -0.71449433] 34791.7317176069
+34791.7317176069
+angles 00:1E:A9:40:EA:9F 2.4019678996271914 -0.8894883786981762
+position [array([17.9907183 , 83.3841433 , -5.08109932])]
+^CTraceback (most recent call last):
+  File "/home/pi/Documents/iglove-pi/position_finding/final.py", line 402, in <module>
+    input()
+KeyboardInterrupt
+
+pi@raspberrypi:~/Documents/iglove-pi/position_finding $ python final.py
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Socket connect error (control socket)
+Cannot connect to your Wiimote. Run again and make sure you are holding buttons 1 + 2!
+Please press buttons 1 + 2 on Wiimote n°1
+Wiimote 1 connected
+Please press buttons 1 + 2 on Wiimote n°2
+Wiimote 2 connected
+Please press buttons 1 + 2 on Wiimote n°3
+Wiimote 3 connected
+Please press buttons 1 + 2 on Wiimote n°4
+Wiimote 4 connected
+All Wiimotes connected!
+To calibrate your wiimotes place a IR source in the middle of your room and make sure that each wiimote sees the dot inside the square
+When it's done press A or B on the wiimote
+Warning : make sure that the wiimote is leveled along the left-right axis (horizontal calibration in progress)
+Calibration point x (in cm) = ^CTraceback (most recent call last):
+  File "/home/pi/Documents/iglove-pi/position_finding/final.py", line 399, in <module>
+    init_position()
+  File "/home/pi/Documents/iglove-pi/position_finding/final.py", line 277, in init_position
+    connection.calibration()
+  File "/home/pi/Documents/iglove-pi/position_finding/wiimotes_calibrate.py", line 82, in calibration
+    self.calib_pt[0] = input("Calibration point x (in cm) = ")
+KeyboardInterrupt
+
+pi@raspberrypi:~/Documents/iglove-pi/position_finding $ git status
+Sur la branche main
+Votre branche est à jour avec 'origin/main'.
+
+Modifications qui ne seront pas validées :
+  (utilisez "git add <fichier>..." pour mettre à jour ce qui sera validé)
+  (utilisez "git restore <fichier>..." pour annuler les modifications dans le répertoire de travail)
+        modifié :         final.py
+        modifié :         wiimotes_calibrate.py
+
+Fichiers non suivis:
+  (utilisez "git add <fichier>..." pour inclure dans ce qui sera validé)
+        calib_pt5.npy
+        calib_pt6.npy
+        calibration5.npy
+        calibration6.npy
+        coords.txt
+        fov_calib.py
+
+aucune modification n'a été ajoutée à la validation (utilisez "git add" ou "git commit -a")
+pi@raspberrypi:~/Documents/iglove-pi/position_finding $ cd ..
+pi@raspberrypi:~/Documents/iglove-pi $ git status
+Sur la branche main
+Votre branche est à jour avec 'origin/main'.
+
+Modifications qui ne seront pas validées :
+  (utilisez "git add <fichier>..." pour mettre à jour ce qui sera validé)
+  (utilisez "git restore <fichier>..." pour annuler les modifications dans le répertoire de travail)
+        modifié :         position_finding/final.py
+        modifié :         position_finding/wiimotes_calibrate.py
+
+Fichiers non suivis:
+  (utilisez "git add <fichier>..." pour inclure dans ce qui sera validé)
+        position_finding/calib_pt5.npy
+        position_finding/calib_pt6.npy
+        position_finding/calibration5.npy
+        position_finding/calibration6.npy
+        position_finding/coords.txt
+        position_finding/fov_calib.py
+
+aucune modification n'a été ajoutée à la validation (utilisez "git add" ou "git commit -a")
+pi@raspberrypi:~/Documents/iglove-pi $ git add .
+pi@raspberrypi:~/Documents/iglove-pi $ git commit -m "Avancement mais bug"
+[main 4cae8b2] Avancement mais bug
+ 8 files changed, 272 insertions(+), 34 deletions(-)
+ create mode 100644 position_finding/calib_pt5.npy
+ create mode 100644 position_finding/calib_pt6.npy
+ create mode 100644 position_finding/calibration5.npy
+ create mode 100644 position_finding/calibration6.npy
+ create mode 100644 position_finding/coords.txt
+ create mode 100644 position_finding/fov_calib.py
+pi@raspberrypi:~/Documents/iglove-pi $ git push
+Énumération des objets: 15, fait.
+Décompte des objets: 100% (15/15), fait.
+Compression par delta en utilisant jusqu'à 4 fils d'exécution
+Compression des objets: 100% (11/11), fait.
+Écriture des objets: 100% (11/11), 2.78 Kio | 406.00 Kio/s, fait.
+Total 11 (delta 7), réutilisés 0 (delta 0), réutilisés du pack 0
+remote: Resolving deltas: 100% (7/7), completed with 4 local objects.
+To https://github.com/florian6973/iglove-pi.git
+   6a2509c..4cae8b2  main -> main
+pi@raspberrypi:~/Documents/iglove-pi $ git push
+Everything up-to-date
+pi@raspberrypi:~/Documents/iglove-pi $ ^C
