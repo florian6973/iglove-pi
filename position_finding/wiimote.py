@@ -14,7 +14,9 @@ default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8", "
 
 width, height = 1024, 768
 fovw = 43.
+fovh = 33.
 d = width/(2*np.tan(fovw*np.pi/180.))
+dh = height/(2*np.tan(fovh*np.pi/180.))
 
 def string_to_numpy(text, dtype=None):
     """
@@ -65,7 +67,7 @@ class Wiimote:
         dots = []
         for dot in self.wiimote.state['ir_src']:
             if dot != None:
-                dots.append(np.array([1024-dot["pos"][0],dot["pos"][1]]))
+                dots.append(np.array([width-dot["pos"][0],height-dot["pos"][1]]))
         if len(dots) > 0:
             #print(dots)
             #print(np.mean(dots, axis=0))
@@ -76,18 +78,37 @@ class Wiimote:
     @staticmethod
     def get_deltapoint(x, y):
         mx = -(x - width//2)
-        my = y - height//2
+        my = -(y - height//2)
         return mx, my
+
+        
+    def __c_arctan__(self, x1, x2):
+        act = np.arctan(x2/x1)
+        if x2 > 0 and x1 > 0:
+            return act
+        elif x2 > 0 and x1 < 0:
+            return np.pi + act
+        elif x2 < 0 and x1 < 0:
+            return act - np.pi
+        else:
+            return act
     
     def calc_angles(self, calib_pt):
         res = self.get_point()
         if res is not None:
+            res = res[0], res[1]
             x, y = res
             mx, my = Wiimote.get_deltapoint(x, y)
-            self.angles[0] = np.arctan((calib_pt[1] - self.pos[1])/(calib_pt[0] - self.pos[0])) + np.arctan(mx/d) 
-            self.angles[1] = np.arcsin((calib_pt[2] - self.pos[2])/1.) - np.arctan(my/d)
-            print("angles", x, y, mx, my, self.angles, end = "\r")
-            return x, y
+            u = calib_pt - self.pos
+            normu = np.linalg.norm(u)
+            self.angles[0] = self.__c_arctan__(calib_pt[0] - self.pos[0],(calib_pt[1] - self.pos[1])) + np.arctan(mx/d) 
+            self.angles[1] = np.arcsin((calib_pt[2] - self.pos[2])/normu) - np.arctan(my/dh)
+            print("angles",
+                    x, y, mx, my, 
+                    np.arctan(mx/d),
+                    -np.arctan(my/dh),
+                    self.angles, end ="\r")
+            return int(x), int(y)
         else:
             return None #res
 
@@ -111,7 +132,7 @@ class PosSolver:
         ax = fig.add_subplot(111, projection='3d')
         ax.clear()
         for i, u in enumerate(self.U_list):
-            U, V, W = u*20
+            U, V, W = u*40
             X, Y, Z = self.P0_list[i]
             print("points pl", X, Y, Z, U, V, W)
             ax.quiver(X, Y, Z, U, V, W)
@@ -139,14 +160,16 @@ class PosSolver:
     def compute_u(self, angles, x, y):
         mx, my = Wiimote.get_deltapoint(x, y)
         theta = -np.arctan(mx/d)
-        phi = np.arctan(my/d)
+        phi = -np.arctan(my/dh)
         u_manette = np.array([
             np.cos(theta)*np.cos(phi),
             np.sin(theta)*np.cos(phi),
             np.sin(phi)
         ])
+        print(u_manette)
         rot = self.rot_yaw(angles[0]) @ self.rot_pitch(angles[1])
         u_rep = rot.dot(u_manette)
+        u_rep[2] = -u_rep[2]
         return u_rep
 
     def append(self, wiimote):
@@ -197,16 +220,16 @@ class PosSolver:
  
     def find_inter(self) :
         try:
-            print(self.U_list)
-            print(self.P0_list)
+            #print(self.U_list)
+            #print(self.P0_list)
             #res = opt.minimize(self.cost_function, self.P0_list[0], method="Powell")
             res = opt.minimize(self.cost_function, self.P0_list[0], method="Nelder-Mead")
             print(res.message)
             print(res.success)
             print(res.fun)
-            print(PosSolver.Z(res.x, self.U_list, self.P0_list, True))
-            print(PosSolver.Z([50, 90, 3], self.U_list, self.P0_list, True))
-            print(PosSolver.Z(self.P0_list[0], self.U_list, self.P0_list, True))
+            #print(PosSolver.Z(res.x, self.U_list, self.P0_list, True))
+            #print(PosSolver.Z([50, 90, 3], self.U_list, self.P0_list, True))
+            #print(PosSolver.Z(self.P0_list[0], self.U_list, self.P0_list, True))
             return res.x
         except Exception as ee:
             print(ee)
@@ -242,7 +265,7 @@ class Room:
 
                 self.wms[i].pos = string_to_numpy(line[2])
                 self.wms[i].calc_angles(self.calib_pt)   
-                #self.wms[i].angles = np.from_string(line[3])
+                self.wms[i].angles = string_to_numpy(line[3])
         print(self.calib_pt, self.wms)
 
     def save_conf(self, file):
@@ -250,7 +273,7 @@ class Room:
             f.write(np.array_str(self.calib_pt) + "\n")
             f.write(str(len(self.wms))+"\n")
             for w in self.wms:
-                f.write(f"{w.MAC};{w.i};{np.array_str(w.pos)}\n")#;{np.array_str(w.angles)}\n")
+                f.write(f"{w.MAC};{w.i};{np.array_str(w.pos)};{np.array_str(w.angles)}\n")#;{np.array_str(w.angles)}\n")
 
     def connect_wiimotes(self) :
         for i, mac in enumerate(self.MACs):
@@ -292,10 +315,11 @@ class Room:
                 if res is not None:
                     x, y = res
                 else:
-                    x = 0
-                    y = 0
-                                
-                screen[x-5:x+5, y-5:y+5] = 1
+                    x = 5
+                    y = 5
+
+                #print(x,y)                                
+                screen[y-5:y+5, x-5:x+5] = 1
 
                 cv2.imshow(f"IR Wiimote n°{i+1}", screen)
                 cv2.waitKey(10)
@@ -308,7 +332,7 @@ class Room:
                     quit()
             cv2.destroyAllWindows()
 
-            print("correction finale", wiimote.angles)  
+            print("\ncorrection finale", wiimote.angles)  
         pass
 
     def get_position(self):
@@ -335,7 +359,7 @@ class Room:
 
 if __name__ == "__main__":
     room = Room(default_MACs)
-    room.init("conf01.txt")
+    room.init("conf03.txt")
     print("End init")
     while True:
         print(room.get_position())
