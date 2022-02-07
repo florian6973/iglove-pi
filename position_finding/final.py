@@ -160,7 +160,7 @@ def distance2(X, U : np.array, P0 : np.array) :
     if S2 >= 0:  #verifier que ca vise dans la bonne direction
         return S1 - S2**2
     else:
-        raise ValueError("N'importe quoi")
+        return S1 + S2**2 # à essayer
  
 def Z(X, U_list, P0_list, detail=False) :
     '''
