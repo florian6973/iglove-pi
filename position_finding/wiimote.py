@@ -7,6 +7,7 @@ from scipy import optimize as opt
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use("tkagg")
+import final as ff
 
 from multiprocessing import Process, Queue
 
@@ -356,6 +357,104 @@ class Room:
         q.put(res)
         return res
 
+room = None
+list_objets = []
+
+def init_position():
+    global room
+    room = Room(default_MACs)
+    room.init("conf03.txt")
+
+def distance2(X, U : np.array, P0 : np.array) :
+    '''
+    Returns the distance between a point X and the line passing through P0 and P
+    '''
+    S1 = 0
+    S2 = 0
+    U = U/np.linalg.norm(U) # make sure U is normalized (useless after tests)
+ 
+    for i in range(3) :
+        tmp = (X[i]-P0[i]) 
+        S1 += tmp**2
+ 
+        S2 += tmp*U[i]
+
+    if S2 >= 0:  #verifier que ca vise dans la bonne direction
+        return S1 - S2**2
+    else:
+        return ValueError("Object behind")
+
+import asyncio, time, random
+
+start_time = time.time()
+last_pos = None
+is_look = False
+
+
+async def stuff():
+    global room
+    global is_look
+    if not is_look:
+        is_look = True
+        last_pos = room.get_position()
+        print(last_pos)
+        print(round(time.time() - start_time, 1), "Finished doing stuff")
+        is_look = False
+    else:
+        print("ignore")
+
+
+async def do_stuff_periodically(interval, periodic_function):
+    while True:
+        print(round(time.time() - start_time, 1), "Starting periodic function")
+        await asyncio.gather(
+            asyncio.sleep(interval),
+            periodic_function(),
+        )
+
+def start_proc():
+    asyncio.run(do_stuff_periodically(5, stuff))
+
+def update_pointage():      
+    global room     
+    global list_objets         
+    #recuperer etats gants
+    pointage = True
+    if pointage:
+        #recuperer direction carte arduino
+        direction_gant = np.array([0., 0., 0.])
+        position_gant = room.get_position()
+        print("position", position_gant)
+
+        distance_objet = [-1] * len(list_objets)
+        for i, objet in enumerate(list_objets):
+            try:
+                distance_objet[i] = distance2(objet.position, direction_gant, position_gant)
+            
+            except ValueError:
+                print("objet derriere")
+            
+        seuil = 50 #distance seuil
+
+        d = 0
+        i_min = -1
+        #find first distance != -1
+        for i, dist in enumerate(distance_objet):
+            if dist >= 0:
+                d = dist
+                i_min = i
+                break
+        #if exists at least one distance != -1, find min distance > 0
+        if i_min != -1:
+            for i, dist in enumerate(distance_objet):
+                if dist >= 0 and dist < d:
+                    d = dist
+                    i_min = i
+            if d < seuil:
+                objet_min = list_objets[i_min]
+                if isinstance(objet_min, ff.Lampe):
+                    objet_min.switch()
+                    #envoyer commande pour interragir avec objet_min
 
 if __name__ == "__main__":
     room = Room(default_MACs)
