@@ -7,10 +7,13 @@ from bleak import BleakScanner
 import sys, os
 from ahrs.filters.madgwick import Madgwick
 import numpy as np
+from concurrent.futures import ProcessPoolExecutor
+import asyncio
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import position_finding.final as pff
 import position_finding.wiimote as pfw
+
 
 async def discovery():
     devices = await BleakScanner.discover()
@@ -32,15 +35,20 @@ channels = {
     "c002": "mag_y",
     "c003": "mag_z",
     "d001": "heading",
+    "d002": "pitch",
+    "d003": "roll",
     "abcd": "cmd"
 }
 channels_n = {}
 channels_w = []
 c_data = {}
 lp = pff.Lampe((0., 0., 0.), "antela_9w_rgb_cct")
+pfw.list_objets.append(lp)
 enc = pff.Speaker((0., 0., 0.))
 pfw.init_position()
 pfw.start_proc()
+
+#asyncio.run(discovery())
 #enc.connect()
 
 import math
@@ -96,27 +104,25 @@ async def callback(sender: int, data: bytearray):
         print(f"Notification STR {src}: {val}")
         if val == "TEST":
             #pfw.update_pointage()
-            print(pfw.last_pos)
             lp.switch()
             print(c_data)
             await loc_client.write_gatt_char(channels_w[0], 'a'.encode())
             print("Send", channels_w[0], 'a'.encode())
             compute_heading()        
         elif val == "end":
-            print(pfw.last_pos)
             #pfw.update_pointage()
             pass
         elif val == "POSI":
-            print(pfw.last_pos)
             pass
             #pfw.update_pointage()
         elif val == "LMPE":
-            print(pfw.last_pos)
             lp.switch()
         elif val == "PNTE":
-            print(pfw.last_pos)
+            #print("pos other file", pfw.last_pos_s)
+            print(c_data)
             print("POINTAGE")
-            enc.play()
+            pfw.update_pointage(c_data)
+            #enc.play()
     else:
         val = struct.unpack('f', data)
         print(f"Notification {src}: {val}")

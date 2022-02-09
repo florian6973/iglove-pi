@@ -8,8 +8,13 @@ import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use("tkagg")
 import final as ff
+import asyncio
 
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, Manager
+manager = Manager()
+last_pos_s = manager.list()
+for i in range(3):
+    last_pos_s.append(0.)
 
 default_MACs = ["00:19:1D:93:DD:E4", "CC:9E:00:5D:2C:ED", "E0:0C:7F:E7:CE:F8", "00:1E:A9:40:EA:9F"]#, "00:19:1D:78:02:71"]
 
@@ -337,18 +342,24 @@ class Room:
         pass
 
     def get_position(self):
-        solver = PosSolver()
-        print("Looking for an IR LED...")
-        while solver.not_enough():
-            solver.clear()
-            for i, wiimote in enumerate(self.wms):
-                solver.append(wiimote)
-            print(len(solver.U_list), "objects", end="\r")
-        queue = Queue()
-        p = Process(target=Room.triangulate, args=(queue, solver))
-        p.start()
-        p.join()
-        return (queue.get())
+        try:
+            solver = PosSolver()
+            print("Looking for an IR LED...")
+            while solver.not_enough():
+                solver.clear()
+                print(self.wms)
+                for i, wiimote in enumerate(self.wms):
+                    solver.append(wiimote)
+                print(len(solver.U_list), "objects", end="\r")
+            queue = Queue()
+            p = Process(target=Room.triangulate, args=(queue, solver))
+            p.start()
+            p.join()
+        except Exception as ee:
+            print(ee)
+        pos = queue.get()
+        print("loc", pos)
+        return pos
 
     @staticmethod
     def triangulate(q, solver):     
@@ -387,54 +398,64 @@ def distance2(X, U : np.array, P0 : np.array) :
 import asyncio, time, random
 
 start_time = time.time()
-last_pos = None
 is_look = False
 
 
-async def stuff():
+def stuff():
     global room
     global is_look
+    global last_pos_s
     if not is_look:
         is_look = True
-        last_pos = room.get_position()
-        print(last_pos)
+        pos = room.get_position()
+        if pos is not None:
+            print("changing")
+            last_pos_s[0] = pos[0]
+            last_pos_s[1] = pos[1]
+            last_pos_s[2] = pos[2]
+        print("loc", last_pos_s)
         print(round(time.time() - start_time, 1), "Finished doing stuff")
         is_look = False
     else:
         print("ignore")
 
 
-async def do_stuff_periodically(interval, periodic_function):
+def do_stuff_periodically():
+    print("Running...")
     while True:
         print(round(time.time() - start_time, 1), "Starting periodic function")
-        await asyncio.gather(
-            asyncio.sleep(interval),
-            periodic_function(),
-        )
+        stuff()
+        time.sleep(3)
 
 def start_proc():
-    asyncio.run(do_stuff_periodically(5, stuff))
+    p = Process(target=do_stuff_periodically, args=())
+    p.start()
 
-def update_pointage():      
+def update_pointage(c_data):      
     global room     
-    global list_objets         
+    global list_objets   
+    global last_pos_s
+    print("update", last_pos_s)      
     #recuperer etats gants
     pointage = True
     if pointage:
         #recuperer direction carte arduino
-        direction_gant = np.array([0., 0., 0.])
-        position_gant = room.get_position()
+        direction_gant = np.array([c_data["heading"], c_data["pitch"], c_data["roll"]])
+        position_gant = np.array(last_pos_s)
         print("position", position_gant)
+        print("position", direction_gant)
+        print("position", list_objets)
 
         distance_objet = [-1] * len(list_objets)
         for i, objet in enumerate(list_objets):
             try:
                 distance_objet[i] = distance2(objet.position, direction_gant, position_gant)
             
+                print(distance_objet[i], objet.position)
             except ValueError:
                 print("objet derriere")
             
-        seuil = 50 #distance seuil
+        seuil = 500**2 #distance seuil
 
         d = 0
         i_min = -1
@@ -444,6 +465,8 @@ def update_pointage():
                 d = dist
                 i_min = i
                 break
+        print(distance_objet)  
+        print(i_min)          
         #if exists at least one distance != -1, find min distance > 0
         if i_min != -1:
             for i, dist in enumerate(distance_objet):
@@ -451,10 +474,14 @@ def update_pointage():
                     d = dist
                     i_min = i
             if d < seuil:
+                print("Recherche objet", type(list_objets[0]).__name__)
                 objet_min = list_objets[i_min]
-                if isinstance(objet_min, ff.Lampe):
+                if type(objet_min).__name__ == "Lampe":
+                    print("Envoi commande")
                     objet_min.switch()
                     #envoyer commande pour interragir avec objet_min
+            else:
+                print("Too far")
 
 if __name__ == "__main__":
     room = Room(default_MACs)
