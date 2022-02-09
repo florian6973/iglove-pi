@@ -47,6 +47,7 @@ pfw.list_objets.append(lp)
 lp2 = pff.Lampe((130., 210., 10.), "antela_9w_rgb_cct_2")
 pfw.list_objets.append(lp2)
 enc = pff.Speaker((0., 0., 0.))
+pfw.list_objets.append(enc)
 pfw.init_position()
 pfw.start_proc()
 
@@ -106,25 +107,24 @@ async def callback(sender: int, data: bytearray):
         print(f"Notification STR {src}: {val}")
         if val == "TEST":
             #pfw.update_pointage()
-            lp.switch()
+            ##lp.switch()
             print(c_data)
             await loc_client.write_gatt_char(channels_w[0], 'a'.encode())
             print("Send", channels_w[0], 'a'.encode())
-            compute_heading()        
-        elif val == "end":
-            #pfw.update_pointage()
-            pass
-        elif val == "POSI":
+            #compute_heading() 
+        elif val == "DGTa":
+            lp2.switch()
             pass
             #pfw.update_pointage()
-        elif val == "LMPE":
+        elif val == "DGTb":
             lp.switch()
-        elif val == "PNTE":
+        elif val == "DGTc":
             #print("pos other file", pfw.last_pos_s)
             print(c_data)
-            print("POINTAGE")
             pfw.update_pointage(c_data)
             #enc.play()
+        elif val == "PNTE":
+            print("PNTE")
     else:
         val = struct.unpack('f', data)
         print(f"Notification {src}: {val}")

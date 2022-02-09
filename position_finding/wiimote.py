@@ -479,9 +479,12 @@ def update_pointage(c_data):
                 print("Recherche objet", type(list_objets[0]).__name__)
                 objet_min = list_objets[i_min]
                 if type(objet_min).__name__ == "Lampe":
-                    print("Envoi commande")
+                    print("Envoi commande L")
                     objet_min.switch()
                     #envoyer commande pour interragir avec objet_min
+                elif type(objet_min).__name__ == "Speaker":
+                    print("Envoi commande S")
+                    objet_min.switch()
             else:
                 print("Too far")
 
