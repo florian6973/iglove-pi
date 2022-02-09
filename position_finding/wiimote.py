@@ -393,7 +393,7 @@ def distance2(X, U : np.array, P0 : np.array) :
     if S2 >= 0:  #verifier que ca vise dans la bonne direction
         return S1 - S2**2
     else:
-        return ValueError("Object behind")
+        raise ValueError("Object behind")
 
 import asyncio, time, random
 
@@ -450,10 +450,12 @@ def update_pointage(c_data):
         for i, objet in enumerate(list_objets):
             try:
                 distance_objet[i] = distance2(objet.position, direction_gant, position_gant)
-            
+                #if distance_objet[i] is ValueError:
+                #    raise distance_objet[i]
                 print(distance_objet[i], objet.position)
             except ValueError:
-                print("objet derriere")
+                distance_objet[i] = 10**15
+                print("objet derriere", distance_objet[i])
             
         seuil = 500**2 #distance seuil
 
@@ -470,7 +472,7 @@ def update_pointage(c_data):
         #if exists at least one distance != -1, find min distance > 0
         if i_min != -1:
             for i, dist in enumerate(distance_objet):
-                if dist >= 0 and dist < d:
+                if dist >= 0. and dist < d:
                     d = dist
                     i_min = i
             if d < seuil:

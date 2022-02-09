@@ -42,8 +42,10 @@ channels = {
 channels_n = {}
 channels_w = []
 c_data = {}
-lp = pff.Lampe((0., 0., 0.), "antela_9w_rgb_cct")
+lp = pff.Lampe((180., 0., 10.), "antela_9w_rgb_cct")
 pfw.list_objets.append(lp)
+lp2 = pff.Lampe((130., 210., 10.), "antela_9w_rgb_cct_2")
+pfw.list_objets.append(lp2)
 enc = pff.Speaker((0., 0., 0.))
 pfw.init_position()
 pfw.start_proc()
