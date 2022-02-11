@@ -77,23 +77,6 @@ def euler_from_quaternion(x, y, z, w):
      
         return roll_x * 180. / np.pi, pitch_y * 180. / np.pi, yaw_z * 180. / np.pi# in radians
 
-def compute_heading():
-    try:
-        print(c_data["gyr_x"])
-        print(np.array([[c_data["gyr_xon [247.0365195   95.96292681  64.77402684]ay([[c_data["mag_x"][0], c_data["mag_y"][0], c_data["mag_z"][0]]])) # frequency  Hz?
-        print(madgwick.Q)
-        print(euler_from_quaternion(madgwick.Q[0][0], madgwick.Q[0][1], madgwick.Q[0][2], madgwick.Q[0][3]))
-
-        # pitch = 180 * atan (accelerationX/sqrt(accelerationY*accelerationY + accelerationZ*accelerationZ))/M_PI;
-#roll = 180 * atan (accelerationY/sqrt(accelerationX*accelerationX + accelerationZ*accelerationZ))/M_PI;
-        # yaw = 180 * atan (accelerationZ/sqrt(accelerationX*accelerationX + accelerationZ*accelerationZ))/M_PI;
-
-        yaw = 180. / np.pi * np.arctan(c_data["acc_z"][0]/np.sqrt(c_data["acc_x"][0]**2+c_data["acc_z"][0]**2))
-        print(yaw)
-
-    except Exception as ee:
-        print("Erreurs", c_data)
-        print(ee)
 
 async def callback(sender: int, data: bytearray):
     print("\t", channels_n[sender])
