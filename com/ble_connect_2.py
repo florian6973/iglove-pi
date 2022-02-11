@@ -42,11 +42,11 @@ channels = {
 channels_n = {}
 channels_w = []
 c_data = {}
-lp = pff.Lampe((180., 0., 10.), "antela_9w_rgb_cct")
+lp = pff.Lampe((0., 0., 10.), "antela_9w_rgb_cct")
 pfw.list_objets.append(lp)
-lp2 = pff.Lampe((130., 210., 10.), "antela_9w_rgb_cct_2")
+lp2 = pff.Lampe((430., 0., 10.), "antela_9w_rgb_cct_2")
 pfw.list_objets.append(lp2)
-enc = pff.Speaker((0., 0., 0.))
+enc = pff.Speaker((430., 250., 150.))
 pfw.list_objets.append(enc)
 pfw.init_position()
 pfw.start_proc()
@@ -121,10 +121,11 @@ async def callback(sender: int, data: bytearray):
         elif val == "DGTc":
             #print("pos other file", pfw.last_pos_s)
             print(c_data)
-            pfw.update_pointage(c_data)
-            #enc.play()
+            #pfw.update_pointage(c_data)
+            enc.switch()
         elif val == "PNTE":
             print("PNTE")
+            pfw.update_pointage(c_data)
     else:
         val = struct.unpack('f', data)
         print(f"Notification {src}: {val}")

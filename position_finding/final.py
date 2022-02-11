@@ -282,9 +282,9 @@ def init_position():
     global DotsTS
     connection = Init_wiimotes()
     connection.connect_wiimotes()
-    connection.calibration()
-    connection.save_calibration("./calibration7.npy", "./calib_pt7.npy")
-    #connection.load_calibration("./calibration6.npy", "./calib_pt6.npy")
+    #connection.calibration()
+    #connection.save_calibration("./calibration7.npy", "./calib_pt7.npy")
+    connection.load_calibration("./calibration7.npy", "./calib_pt7.npy")
 
     wiimotes = connection.wiimotes
     print(wiimotes)
